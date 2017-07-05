@@ -1,0 +1,1 @@
+TODO átolvasása, beadandóm csekkolása (az editor nem fontos), szabályzat elolvasása, ha meglesz.

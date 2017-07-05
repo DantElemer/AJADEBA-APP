@@ -1,0 +1,2 @@
+GameSceen elkezdése: kattintgatható mezõk, körkezelés, amit gondolsz :)
+Szabályzat elolvasása, ha meglesz.

@@ -49,16 +49,16 @@
 	b) Pálya
 		- mezõkbõl áll, amiken alapvetõen egyfajta dolog lehet, de Gyöngyi és a Kurkász bekavar (alagút, fõfalu)
 		- mezõre kattintgatással lehet csinálni valamit, alap hozzálásként úgy, mint a beadandómban
-		- + kaszránya ostrom
+		- + kaszárnya ostrom
 		- + offenzíva lehetõség és egyéb karakteres kiegészítések
 		- + némi infó kiírás (másfajta kattintásra?)
-		- támadásnál támadható várak kijelzése, ha nincs autómatikus "visszalépés" és üzenet
+		- támadásnál támadható várak kijelzése, ha nincs automatikus "visszalépés" és üzenet
 	
 	c) Egyéb apróságok:
 		- karakterválasztás (panelra katt?)
 		- fehér zászlócska feladáshoz (utána még egy are you sure...) -> (*)
 		- valakinek elfogynak a várai -> (*)
-		(*) másik nyer, kismenü: Restart/Play againf/Menu
+		(*) másik nyer, kismenü: Restart/Play again/Menu
 
 
 
