@@ -70,6 +70,11 @@
 	b) Kik játszhatnak?
 		Elég jó lenne, ha interneten keresztül lehetne máshol lévõ emberekkel is játszani, de én egyrészt nem tudom, 		h ilyet, hogy lehet csinálni, másrészt nem értem, hogy lehet elérni olyan játékosszintet a semmibõl, hogy ne 		kelljen 1 napot várni míg más is akar játszani.
 
+	c) Grafika
+		Az általam elképzelt lehetõségek: 
+			olyasmi mint a beadandóm (2D, felülnézet, egyszerû, kn mint egy amõba)
+			valami rendes (kaszárnya tényleg kaszárnya...), esetleg évfolyamtárs tud segíteni (Ricsi), de a 			felülnézet szerintem nem elvethetõ, így a 3D-nek se átom sok értelmét...
+
 
 	
 		
