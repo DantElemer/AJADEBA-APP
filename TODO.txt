@@ -1,0 +1,75 @@
+
+0) Nyelvválasztási lehetõség (magyar/angol)?
+
+
+
+1) Fõmenü
+
+	a) Play
+		Továbblépés a Settingsbe.
+
+	b) Tutorial
+		Hát erre eléggé baromi nagy szükség van. A beadandómban lévõnél azért jó lenne egy interaktívabb, illetve 			különbözõ szintekre osztanám (ugyanezek a szintek a Settingsben is beállíthatóak lennének).
+
+	c) Map Editor (?)
+		Ez esetleg csak nekünk egy használható, de nem szépen kidolgozott, nem tudom Unityben a fájlolvasás/írás, 			hogy van (van-e), esetleg a beadandómban lévõt is használhatjuk pálya gyártásra.
+
+	d) Exit (?)
+		Ilyen szokott lenni?
+
+
+
+2) Settings (alap cél: két játékosra, de jó lenne, ha lenne lehetõség többre is, csapatokra, ugyanígy a játékban nyilván)
+
+	a) Idõ
+		Mennyi idõ legyen egy kör, nem lineáris osztás kéne, "végtelen" is lehetõség.
+
+	b) Zászló
+		Játékosoknak be lehessen állítani néhány zászló közül egyet-egyet (különbözõket).
+
+	c) Bonyolultság
+		Az említett "szintek" beállítási lehetõsége. 
+
+	d) Nevek
+		Játékosok neveit be lehessen állítani.
+
+	e) Pálya
+		Random - generáló paraméterek beállítása (méret, mennyi alapépület...).
+		Elõre legyártott - választás.
+
+	f) Továbblépés
+		Menu/Start gombok.
+
+
+3) A játék
+	
+	a) Elemei
+		Pálya, kör-karakter-cókmók jelzõ, mennyi idõ van még hátra a körbõl (kiv. ha végtelen lett beállítva). 				Esetleg valami képesség használó panel. Esetleg üzenet panel (beadandóm cout-olása, mi történt).
+
+	b) Pálya
+		- mezõkbõl áll, amiken alapvetõen egyfajta dolog lehet, de Gyöngyi és a Kurkász bekavar (alagút, fõfalu)
+		- mezõre kattintgatással lehet csinálni valamit, alap hozzálásként úgy, mint a beadandómban
+		- + kaszránya ostrom
+		- + offenzíva lehetõség és egyéb karakteres kiegészítések
+		- + némi infó kiírás (másfajta kattintásra?)
+		- támadásnál támadható várak kijelzése, ha nincs autómatikus "visszalépés" és üzenet
+	
+	c) Egyéb apróságok:
+		- karakterválasztás (panelra katt?)
+		- fehér zászlócska feladáshoz (utána még egy are you sure...) -> (*)
+		- valakinek elfogynak a várai -> (*)
+		(*) másik nyer, kismenü: Restart/Play againf/Menu
+
+
+
+4) Általános
+
+	a) Zene
+		Legyen, ne legyen, ha igen mi, ekkor legyen némító gomb mindenhol.
+
+	b) Kik játszhatnak?
+		Elég jó lenne, ha interneten keresztül lehetne máshol lévõ emberekkel is játszani, de én egyrészt nem tudom, 		h ilyet, hogy lehet csinálni, másrészt nem értem, hogy lehet elérni olyan játékosszintet a semmibõl, hogy ne 		kelljen 1 napot várni míg más is akar játszani.
+
+
+	
+		
