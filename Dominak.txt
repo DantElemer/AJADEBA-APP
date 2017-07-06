@@ -1,2 +1,2 @@
 Kitalálni ki mit csináljon a továbbiakban. 
-Settings.
+Settings. A többi beállítható cucc, elmentésük és minden beállítása alapból az elõzõekben betöltöttekre.
