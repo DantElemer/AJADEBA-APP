@@ -1,5 +1,5 @@
 
-0) Nyelvválasztási lehetõség (magyar/angol)?
+0) Nyelvválasztási lehetõség (magyar/angol)
 
 
 
@@ -14,8 +14,7 @@
 	c) Map Editor (?)
 		Ez esetleg csak nekünk egy használható, de nem szépen kidolgozott, nem tudom Unityben a fájlolvasás/írás, 			hogy van (van-e), esetleg a beadandómban lévõt is használhatjuk pálya gyártásra.
 
-	d) Exit (?)
-		Ilyen szokott lenni?
+	d) Exit 
 
 
 
@@ -68,12 +67,12 @@
 		Legyen, ne legyen, ha igen mi, ekkor legyen némító gomb mindenhol.
 
 	b) Kik játszhatnak?
-		Elég jó lenne, ha interneten keresztül lehetne máshol lévõ emberekkel is játszani, de én egyrészt nem tudom, 		h ilyet, hogy lehet csinálni, másrészt nem értem, hogy lehet elérni olyan játékosszintet a semmibõl, hogy ne 		kelljen 1 napot várni míg más is akar játszani.
+		1) Egy mobilon ketten, majd remélhetõleg többen.
+		2) Bluetoothon keresztül.
+		3) Interneten keresztül.
 
 	c) Grafika
-		Az általam elképzelt lehetõségek: 
-			olyasmi mint a beadandóm (2D, felülnézet, egyszerû, kn mint egy amõba)
-			valami rendes (kaszárnya tényleg kaszárnya...), esetleg évfolyamtárs tud segíteni (Ricsi), de a 			felülnézet szerintem nem elvethetõ, így a 3D-nek se átom sok értelmét...
+		olyasmi mint a beadandóm (2D, felülnézet, egyszerû, kn mint egy amõba).
 
 
 	
