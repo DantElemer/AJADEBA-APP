@@ -1,2 +1,6 @@
-GameSceen elkezd�se: kattintgathat� mez�k, k�rkezel�s, amit gondolsz :)
-Szab�lyzat elolvas�sa, ha meglesz.
+Szabályzat elolvasása, ha meglesz.
+GameSceen elkezdése: 
+  körökre osztottság, játékosok,
+  legyenek mezők, cuccok rajtuk, 
+  rájuk kattintva jöjjön ki a build options (a megbeszéltek szerinti működéssel),
+  ha nem lehet oda építeni (ellenséges terület, fullos...), hiba üzenet (Debug.Log szinten).
