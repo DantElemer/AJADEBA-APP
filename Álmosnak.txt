@@ -1,1 +1,2 @@
-TODO �tolvas�sa, beadand�m csekkol�sa (az editor nem fontos), szab�lyzat elolvas�sa, ha meglesz.
+TODO átolvasása, beadandóm csekkolása (az editor nem fontos), szabályzat elolvasása, ha meglesz.
+Mikivel együtt dolgozni az alapokon.
