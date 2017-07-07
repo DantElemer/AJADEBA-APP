@@ -8,6 +8,7 @@ public class Settings : MonoBehaviour
 {
 	public Slider sldrTimeOfTurn;
 	public Text txtTimeOfTurn;
+	public Dropdown drpdwnComplexity;
 
 	List<string> turnTimeOps = new List <string>();
 
@@ -15,6 +16,8 @@ public class Settings : MonoBehaviour
 	{
 		GenerateTurnTimeOps ();
 		sldrTimeOfTurn.maxValue = turnTimeOps.Count-1;
+
+		LoadPrevSettings ();
 	}
 
 	void GenerateTurnTimeOps() //GenerateLinearIntervall() can be useful...
@@ -38,6 +41,10 @@ public class Settings : MonoBehaviour
 		}
 	}
 
+	public void ChangeComplexity()
+	{
+		PlayerPrefs.SetString ("Complexity", drpdwnComplexity.options [drpdwnComplexity.value].text);
+	}
 
 	public void ChangeTurnTime()
 	{
@@ -53,6 +60,11 @@ public class Settings : MonoBehaviour
 	{
 		SaveData ();
 		SceneManager.LoadScene("Game");
+	}
+
+	void LoadPrevSettings() 
+	{
+		//TODO
 	}
 
 	void SaveData()

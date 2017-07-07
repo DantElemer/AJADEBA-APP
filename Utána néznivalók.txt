@@ -1,0 +1,4 @@
+fájl kezelés (beolvasás: http://answers.unity3d.com/questions/279750/loading-data-from-a-txt-file-c.html)
+mobilos dolgok:
+	húzás - onMouseDown?
+	billentyûzet feljön? - input field
