@@ -1,3 +1,4 @@
-Szabályzat!!
+SzabÃ¡lyzat!!
 Tutorialok.
-Gondolkozás az egész játék kinézetén, mûködésén (karakterek speckó dolgai például, hogy legyenek használhatóak...), konzultálás Domival.
+GondolkozÃ¡s az egÃ©sz jÃ¡tÃ©k kinÃ©zetÃ©n, mÅ±kÃ¶dÃ©sÃ©n (karakterek speckÃ³ dolgai pÃ©ldÃ¡ul, hogy legyenek hasznÃ¡lhatÃ³ak...), konzultÃ¡lÃ¡s Domival.
+Settings, DomiTime.
