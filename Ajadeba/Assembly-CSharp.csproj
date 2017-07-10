@@ -45,7 +45,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\Game\Field.cs" />
      <Compile Include="Assets\Scripts\Game\Game.cs" />
+     <Compile Include="Assets\Scripts\Game\MapHandler.cs" />
      <Compile Include="Assets\Scripts\Game\PlayerHandler.cs" />
      <Compile Include="Assets\Scripts\Game\TimeHandler.cs" />
      <Compile Include="Assets\Scripts\MainMenu.cs" />
