@@ -1,26 +1,33 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerHandler : MonoBehaviour {
 
 	public Text txtCurrPlayer;
 	public Player playerPref;
-	Player[] players;
-	int currPlayer;
+	public static Player[] players;
+	public static int currPlayer;
 
 	// Use this for initialization
 	void Start () 
 	{
 		CreatingPlayers ();
 		ActivatePlayer (0);
-		NextPlayer (); NextPlayer ();
+	}
+
+	void Update()
+	{
+		if (Input.GetKeyDown (KeyCode.N))
+			NextPlayer ();
 	}
 	
 	void NextPlayer()
 	{
 		DeactivatePlayer ();
 		ActivatePlayer (FindNextAlive (currPlayer));
+		SceneManager.LoadScene ("NewTurn", LoadSceneMode.Additive);
 	}
 
 	int FindNextAlive (int index)
