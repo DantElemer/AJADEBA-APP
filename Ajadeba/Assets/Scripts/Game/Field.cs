@@ -7,6 +7,7 @@ public class Field : MonoBehaviour {
 	public const float WIDTH = 0.3f;
 
 	public GameObject villagePref;
+	public GameObject barrackPref;
 	public GameObject northRoadPref;
 	public GameObject eastRoadPref;
 	public GameObject southRoadPref;
@@ -45,8 +46,12 @@ public class Field : MonoBehaviour {
 		road.transform.position = gameObject.transform.position;
 	}
 
-	public void addBarrack (Player owner)
+	public void addBarrack (/*Player owner*/)
 	{
+		GameObject bar = Instantiate (barrackPref);
+		bar.transform.SetParent (gameObject.transform);
+		bar.transform.position = gameObject.transform.position;
+		Debug.Log ("barackok");
 		//TODO
 	}
 

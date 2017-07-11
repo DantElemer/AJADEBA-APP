@@ -8,12 +8,14 @@ public class MapHandler : MonoBehaviour { //TODO add to Map, not to GameHandler?
 
 	public GameObject map;
 	public RoadOption roadOptionPref; 
+	public BarrackOption barrackOptionPref;
 	public Field fieldPrefab;
 	public Field[] fields; 
 
 	public int chosenField;
 
 	RoadOption rO;
+	BarrackOption bO;
 
 
 	public static MapHandler instance //singleton magic
@@ -61,7 +63,6 @@ public class MapHandler : MonoBehaviour { //TODO add to Map, not to GameHandler?
 
 	public void FieldPressed (int fieldInd) //mouse down on field
 	{
-		Debug.Log (fields[fieldInd].transform.position);
 		//TODO tesztelni, h tud-e bármit csinálni ott
 		OpenBuildOptions(fieldInd);
 	}
@@ -70,6 +71,8 @@ public class MapHandler : MonoBehaviour { //TODO add to Map, not to GameHandler?
 	{
 		rO = Instantiate (roadOptionPref); //TODO show around the clicked field
 		rO.transform.position = fields[fieldInd].transform.position+Vector3.right;
+		bO = Instantiate (barrackOptionPref); //TODO show around the clicked field
+		bO.transform.position = fields[fieldInd].transform.position+Vector3.left;
 		chosenField = fieldInd;
 	}
 
@@ -82,6 +85,7 @@ public class MapHandler : MonoBehaviour { //TODO add to Map, not to GameHandler?
 	{
 		rO.CloseRoadOps ();
 		Destroy (rO.gameObject);
+		Destroy (bO.gameObject);
 		//TODO
 	}
 }
