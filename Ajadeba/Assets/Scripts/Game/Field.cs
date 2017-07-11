@@ -45,6 +45,11 @@ public class Field : MonoBehaviour {
 		road.transform.position = gameObject.transform.position;
 	}
 
+	public void addBarrack (Player owner)
+	{
+		//TODO
+	}
+
 	void OnMouseDown()
 	{
 		MapHandler.instance.FieldPressed(index);

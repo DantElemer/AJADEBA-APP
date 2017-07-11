@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\Game\ARoadOp.cs" />
+     <Compile Include="Assets\Scripts\Game\BarrackOption.cs" />
      <Compile Include="Assets\Scripts\Game\Field.cs" />
      <Compile Include="Assets\Scripts\Game\Game.cs" />
      <Compile Include="Assets\Scripts\Game\MapHandler.cs" />
