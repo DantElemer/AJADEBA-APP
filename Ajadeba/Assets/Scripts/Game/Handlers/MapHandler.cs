@@ -9,6 +9,7 @@ public class MapHandler : MonoBehaviour { //TODO add to Map, not to GameHandler?
 	public GameObject map;
 	public RoadOption roadOptionPref; 
 	public BarrackOption barrackOptionPref;
+	public StrongBaseOp strongBaseOpPref;
 	public Field fieldPrefab;
 	public Field[] fields; 
 
@@ -16,6 +17,7 @@ public class MapHandler : MonoBehaviour { //TODO add to Map, not to GameHandler?
 
 	RoadOption rO;
 	BarrackOption bO;
+	StrongBaseOp sO;
 
 
 	public static MapHandler instance //singleton magic
@@ -73,6 +75,8 @@ public class MapHandler : MonoBehaviour { //TODO add to Map, not to GameHandler?
 		rO.transform.position = fields[fieldInd].transform.position+Vector3.right;
 		bO = Instantiate (barrackOptionPref); //TODO show around the clicked field
 		bO.transform.position = fields[fieldInd].transform.position+Vector3.left;
+		sO = Instantiate (strongBaseOpPref); //TODO show around the clicked field
+		sO.transform.position = fields[fieldInd].transform.position+Vector3.up;
 		chosenField = fieldInd;
 	}
 
@@ -86,6 +90,7 @@ public class MapHandler : MonoBehaviour { //TODO add to Map, not to GameHandler?
 		rO.CloseRoadOps ();
 		Destroy (rO.gameObject);
 		Destroy (bO.gameObject);
+		Destroy (sO.gameObject);
 		//TODO
 	}
 }

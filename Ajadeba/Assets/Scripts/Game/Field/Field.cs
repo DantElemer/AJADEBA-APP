@@ -8,6 +8,7 @@ public class Field : MonoBehaviour {
 
 	public GameObject villagePref;
 	public Barrack barrackPref;
+	public GameObject strongBasePref;
 	public GameObject northRoadPref;
 	public GameObject eastRoadPref;
 	public GameObject southRoadPref;
@@ -51,8 +52,15 @@ public class Field : MonoBehaviour {
 		Barrack bar = Instantiate (barrackPref);
 		bar.transform.SetParent (gameObject.transform);
 		bar.transform.position = gameObject.transform.position;
-		bar.owner = owner;
+		bar.owner = PlayerHandler.instance.currentPlayer;
 		bar.inic();
+	}
+
+	public void addStrongBase () //TODO
+	{
+		GameObject strongBase = Instantiate (strongBasePref);
+		strongBase.transform.SetParent (gameObject.transform);
+		strongBase.transform.position = gameObject.transform.position;
 		//TODO
 	}
 

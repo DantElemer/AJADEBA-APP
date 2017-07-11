@@ -33,6 +33,8 @@ public class RoadOption : MonoBehaviour {
 	{
 		if (!open)
 			ShowRoadOps ();
+		/*else
+			CloseRoadOps ();*/
 	}
 
 	public void CloseRoadOps()
