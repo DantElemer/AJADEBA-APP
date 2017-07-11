@@ -5,12 +5,28 @@ using UnityEngine.SceneManagement;
 
 public class PlayerHandler : MonoBehaviour {
 
+	private static PlayerHandler sInstance;
+
 	public Text txtCurrPlayer;
 	public Player playerPref;
-	public static Player[] players;
-	public static int currPlayer;
+	public Player[] players;
+	public Player currentPlayer;
+	int currPlayer;
 
-	// Use this for initialization
+
+	public static PlayerHandler instance //singleton magic
+	{
+		get 
+		{
+			if (sInstance == null)
+				sInstance = FindObjectOfType (typeof(PlayerHandler)) as PlayerHandler;
+			if (sInstance == null)
+				sInstance = new PlayerHandler ();
+			return sInstance;
+		}
+	}
+
+
 	void Start () 
 	{
 		CreatingPlayers ();
@@ -45,9 +61,10 @@ public class PlayerHandler : MonoBehaviour {
 	void ActivatePlayer(int itsIndex)
 	{
 		currPlayer = itsIndex;
-		players [itsIndex].SetActive (true);
+		currentPlayer = players [currPlayer];
+		currentPlayer.SetActive (true);
 		Debug.Log (currPlayer.ToString () + ". player's turn!");
-		txtCurrPlayer.text = "Current player: " + players [currPlayer].myName;
+		txtCurrPlayer.text = "Current player: " + currentPlayer.myName;
 	}
 
 	void DeactivatePlayer() //the current one

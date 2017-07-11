@@ -10,7 +10,7 @@ public class NewTurn : MonoBehaviour {
 	// Use this for initialization
 	void Start () 
 	{
-		txtNewTurn.text=PlayerHandler.players[PlayerHandler.currPlayer].myName+" köre!";
+		txtNewTurn.text=PlayerHandler.instance.currentPlayer.myName+" köre!";
 	}
 	
 	// Update is called once per frame
