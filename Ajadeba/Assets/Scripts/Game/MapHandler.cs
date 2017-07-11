@@ -11,6 +11,10 @@ public class MapHandler : MonoBehaviour { //TODO add to Map, not to GameHandler?
 	public Field fieldPrefab;
 	public Field[] fields; 
 
+	public int chosenField;
+
+	RoadOption rO;
+
 
 	public static MapHandler instance //singleton magic
 	{
@@ -25,12 +29,8 @@ public class MapHandler : MonoBehaviour { //TODO add to Map, not to GameHandler?
 	}
 
 	void Start () {
-		//TODO: generate map
+		//TODO: generate map normally
 		GenerateMap();
-	}
-
-	void Update () {
-	
 	}
 
 	void GenerateMap()
@@ -62,13 +62,15 @@ public class MapHandler : MonoBehaviour { //TODO add to Map, not to GameHandler?
 	public void FieldPressed (int fieldInd) //mouse down on field
 	{
 		Debug.Log (fields[fieldInd].transform.position);
-		//TODO valami értelmeset csinálni itt...
+		//TODO tesztelni, h tud-e bármit csinálni ott
 		OpenBuildOptions(fieldInd);
 	}
 
 	void OpenBuildOptions (int fieldInd)
 	{
-		Instantiate (roadOptionPref); //TODO show around the clicked field
+		rO = Instantiate (roadOptionPref); //TODO show around the clicked field
+		rO.transform.position = fields[fieldInd].transform.position+Vector3.right;
+		chosenField = fieldInd;
 	}
 
 	public void FieldReleased (int fieldInd) //mouse down on field
@@ -78,6 +80,8 @@ public class MapHandler : MonoBehaviour { //TODO add to Map, not to GameHandler?
 
 	void CloseBuildOptions (int fieldInd)
 	{
+		rO.CloseRoadOps ();
+		Destroy (rO.gameObject);
 		//TODO
 	}
 }

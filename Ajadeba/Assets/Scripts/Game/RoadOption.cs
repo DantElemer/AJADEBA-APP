@@ -3,24 +3,47 @@ using System.Collections;
 
 public class RoadOption : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+	public GameObject northRoadOpPref;
+	GameObject nRO;
+	public GameObject eastRoadOpPref;
+	GameObject eRO;
+	public GameObject southRoadOpPref;
+	GameObject sRO;
+	public GameObject westRoadOpPref;
+	GameObject wRO;
+
+	bool open=false;
+
 
 	void ShowRoadOps()
 	{
-		//TODO
+		nRO = Instantiate (northRoadOpPref);
+		nRO.transform.position = gameObject.transform.position + Vector3.up / 2;
+		eRO = Instantiate (eastRoadOpPref);
+		eRO.transform.position = gameObject.transform.position + Vector3.right / 2;
+		sRO = Instantiate (southRoadOpPref);
+		sRO.transform.position = gameObject.transform.position + Vector3.down / 2;
+		wRO = Instantiate (westRoadOpPref);
+		wRO.transform.position = gameObject.transform.position + Vector3.left / 2;
+
+		open = true;
 	}
 
-	void OnMouseOver()
+	void OnMouseEnter()
 	{
-		if (Input.GetMouseButtonUp (0))
+		if (!open)
 			ShowRoadOps ();
+	}
+
+	public void CloseRoadOps()
+	{
+		if (open) 
+		{
+			Destroy (nRO.gameObject);
+			Destroy (eRO.gameObject);
+			Destroy (sRO.gameObject);
+			Destroy (wRO.gameObject);
+		}	
+		open = false;
 	}
 }
