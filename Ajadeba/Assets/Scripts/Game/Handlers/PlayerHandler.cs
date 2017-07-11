@@ -63,7 +63,6 @@ public class PlayerHandler : MonoBehaviour {
 		currPlayer = itsIndex;
 		currentPlayer = players [currPlayer];
 		currentPlayer.SetActive (true);
-		Debug.Log (currPlayer.ToString () + ". player's turn!");
 		txtCurrPlayer.text = "Current player: " + currentPlayer.myName;
 	}
 

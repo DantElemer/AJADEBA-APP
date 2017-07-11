@@ -8,6 +8,6 @@ public class ARoadOp : MonoBehaviour {
 	void OnMouseOver()
 	{
 		if (Input.GetMouseButtonUp (0))
-			MapHandler.instance.fields [MapHandler.instance.chosenField].addRoad (direction);
+			MapHandler.instance.chosenField.addRoad (direction);
 	}
 }

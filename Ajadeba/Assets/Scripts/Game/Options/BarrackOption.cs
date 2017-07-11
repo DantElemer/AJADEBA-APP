@@ -14,6 +14,6 @@ public class BarrackOption : MonoBehaviour {
 	void OnMouseOver()
 	{
 		if (Input.GetMouseButtonUp (0)) 
-			MapHandler.instance.fields [MapHandler.instance.chosenField].addBarrack (PlayerHandler.instance.currentPlayer);
+			MapHandler.instance.chosenField.addBarrack (PlayerHandler.instance.currentPlayer);
 	}
 }

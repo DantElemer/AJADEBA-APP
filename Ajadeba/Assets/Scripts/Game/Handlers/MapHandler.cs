@@ -7,17 +7,10 @@ public class MapHandler : MonoBehaviour { //TODO add to Map, not to GameHandler?
 
 
 	public GameObject map;
-	public RoadOption roadOptionPref; 
-	public BarrackOption barrackOptionPref;
-	public StrongBaseOp strongBaseOpPref;
 	public Field fieldPrefab;
 	public Field[] fields; 
 
-	public int chosenField;
-
-	RoadOption rO;
-	BarrackOption bO;
-	StrongBaseOp sO;
+	public Field chosenField;
 
 
 	public static MapHandler instance //singleton magic
@@ -63,34 +56,16 @@ public class MapHandler : MonoBehaviour { //TODO add to Map, not to GameHandler?
 			}
 	}
 
-	public void FieldPressed (int fieldInd) //mouse down on field
+	public void FieldPressed (Field field) //mouse down on field
 	{
-		//TODO tesztelni, h tud-e bármit csinálni ott
-		OpenBuildOptions(fieldInd);
+		if (BuildHandler.instance.canBuild(field,PlayerHandler.instance.currentPlayer))
+			BuildHandler.instance.OpenBuildOptions(field);
+		chosenField = field;
 	}
 
-	void OpenBuildOptions (int fieldInd)
+	public void FieldReleased (Field field) //mouse down on field
 	{
-		rO = Instantiate (roadOptionPref); //TODO show around the clicked field
-		rO.transform.position = fields[fieldInd].transform.position+Vector3.right;
-		bO = Instantiate (barrackOptionPref); //TODO show around the clicked field
-		bO.transform.position = fields[fieldInd].transform.position+Vector3.left;
-		sO = Instantiate (strongBaseOpPref); //TODO show around the clicked field
-		sO.transform.position = fields[fieldInd].transform.position+Vector3.up;
-		chosenField = fieldInd;
-	}
-
-	public void FieldReleased (int fieldInd) //mouse down on field
-	{
-		CloseBuildOptions(fieldInd);
-	}
-
-	void CloseBuildOptions (int fieldInd)
-	{
-		rO.CloseRoadOps ();
-		Destroy (rO.gameObject);
-		Destroy (bO.gameObject);
-		Destroy (sO.gameObject);
-		//TODO
+		if (BuildHandler.instance.open)
+			BuildHandler.instance.CloseBuildOptions();
 	}
 }

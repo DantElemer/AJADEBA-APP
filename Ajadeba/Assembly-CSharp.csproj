@@ -48,6 +48,7 @@
      <Compile Include="Assets\Scripts\Game\Field\Barrack.cs" />
      <Compile Include="Assets\Scripts\Game\Field\Field.cs" />
      <Compile Include="Assets\Scripts\Game\Game.cs" />
+     <Compile Include="Assets\Scripts\Game\Handlers\BuildHandler.cs" />
      <Compile Include="Assets\Scripts\Game\Handlers\MapHandler.cs" />
      <Compile Include="Assets\Scripts\Game\Handlers\PlayerHandler.cs" />
      <Compile Include="Assets\Scripts\Game\Handlers\TimeHandler.cs" />
