@@ -61,7 +61,7 @@ public class Field : MonoBehaviour {
 		bar.transform.SetParent (gameObject.transform);
 		bar.transform.position = gameObject.transform.position;
 		bar.owner = PlayerHandler.instance.currentPlayer;
-		bar.inic();
+		bar.Inic();
 	}
 
 	public void addStrongBase () //TODO
@@ -75,7 +75,7 @@ public class Field : MonoBehaviour {
 	public bool hasPart(string part)
 	{
 		Transform c=gameObject.transform.Find (part);
-		if (c==null)
+		if (c == null)
 			return false;
 		return true;
 	}
@@ -94,6 +94,24 @@ public class Field : MonoBehaviour {
 		    hasPart (NORTH_ROAD) && hasPart (EAST_ROAD) && hasPart (SOUTH_ROAD) && hasPart (WEST_ROAD))
 			return true;
 		return false;
+	}
+
+	public int BarrackStrength()
+	{
+		if (hasPart (BARRACK))
+			return myBarrack.strength;
+		else
+			return 0;
+	}
+
+	Barrack myBarrack
+	{
+		get
+		{
+			if (hasPart (BARRACK))
+				return GetComponentInChildren<Barrack> () as Barrack;
+			return null;
+		}
 	}
 
 	void OnMouseDown()

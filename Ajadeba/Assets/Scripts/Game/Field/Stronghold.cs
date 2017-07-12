@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Barrack : MonoBehaviour {
+public class Stronghold : MonoBehaviour {
 
 	public Player owner;
 
@@ -12,20 +12,12 @@ public class Barrack : MonoBehaviour {
 		}
 	}
 
-	/*public Barrack(Player owner)
-		: owner (owner
-	{
-
-	}*/
-
 	public void Inic()
 	{
 		//setting flag
 		GameObject flag = gameObject.transform.Find ("Flag").gameObject;
 		SpriteRenderer flagSR = flag.GetComponent<SpriteRenderer> ();
 		flagSR.sprite = owner.flag;
-
-		Debug.Log (myField.index);
 	}
 
 	public int strength
