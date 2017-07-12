@@ -1,2 +1,2 @@
-TODO átolvasása, beadandóm csekkolása (az editor nem fontos), szabályzat elolvasása, ha meglesz.
-Mikivel együtt dolgozni az alapokon.
+Szabályzat elolvasása, ha meglesz.
+Válaszolni Balázsnak, esetleg Mikinek, ha kérdeznek valamit.
