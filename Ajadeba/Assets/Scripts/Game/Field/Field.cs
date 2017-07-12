@@ -6,6 +6,8 @@ using System.Collections.Generic;
 public class Field : MonoBehaviour {
 
 	public int index = -1; 
+	public int xCoord;
+	public int yCoord;
 	public const float WIDTH = 0.3f;
 
 	public GameObject villagePref;
@@ -71,12 +73,12 @@ public class Field : MonoBehaviour {
 		bar.Inic();
 	}
 
-	public void addStrongBase () //TODO
+	public void addStrongBase () 
 	{
-		GameObject strongBase = Instantiate (strongBasePref);
+		/*GameObject strongBase = Instantiate (strongBasePref);
 		strongBase.transform.SetParent (gameObject.transform);
-		strongBase.transform.position = gameObject.transform.position;
-		//TODO
+		strongBase.transform.position = gameObject.transform.position;*/
+		addStronghold (PlayerHandler.instance.currentPlayer);
 	}
 
 	public void addStronghold (Player owner) //TODO

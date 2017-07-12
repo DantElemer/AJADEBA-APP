@@ -8,7 +8,7 @@ public class MapHandler : MonoBehaviour { //TODO add to Map, not to GameHandler?
 
 	public GameObject map;
 	public Field fieldPrefab;
-	public Field[] fields; 
+	public Field[][] fields; 
 
 	public Field chosenField;
 
@@ -32,28 +32,32 @@ public class MapHandler : MonoBehaviour { //TODO add to Map, not to GameHandler?
 
 	void GenerateMap()
 	{
-		fields = new Field[100];
-		for (int i = 0; i < 10; i++)
-			for (int j = 0; j < 10; j++) 
-			{
-				fields [10*i+j] = Instantiate(fieldPrefab);
-				fields [10*i+j].index = 10*i+j;
-				fields [10 * i + j].transform.Translate(new Vector3 (Field.WIDTH * (i-5), Field.WIDTH * (j-5), 0));
-				fields [10 * i + j].transform.SetParent (map.transform);
-				if (Random.value < 0.1)
-					fields [10 * i + j].addVillage ();
-				else 
-				{
+		fields = new Field[10][];
+		for (int i = 0; i < 10; i++) {
+			fields [i] = new Field[10];
+			for (int j = 0; j < 10; j++) {
+				if (Random.value < 0.95) { //néhányat kihagyunk 
+					fields [i] [j] = Instantiate (fieldPrefab);
+					fields [i] [j].index = 10 * i + j;
+					fields [i] [j].xCoord = i;
+					fields [i] [j].yCoord = j;
+					fields [i] [j].transform.Translate (new Vector3 (Field.WIDTH * (i - 5), Field.WIDTH * (j - 5), 0));
+					fields [i] [j].transform.SetParent (map.transform);
 					if (Random.value < 0.1)
-						fields [10 * i + j].addRoad (Field.NORTH);
-					if (Random.value < 0.1)
-						fields [10 * i + j].addRoad (Field.EAST);
-					if (Random.value < 0.1)
-						fields [10 * i + j].addRoad (Field.SOUTH);
-					if (Random.value < 0.1)
-						fields [10 * i + j].addRoad (Field.WEST);
-				}
+						fields [i] [j].addVillage ();
+					else {
+						if (Random.value < 0.1)
+							fields [i] [j].addRoad (Field.NORTH);
+						if (Random.value < 0.1)
+							fields [i] [j].addRoad (Field.EAST);
+						if (Random.value < 0.1)
+							fields [i] [j].addRoad (Field.SOUTH);
+						if (Random.value < 0.1)
+							fields [i] [j].addRoad (Field.WEST);
+					}
+				} 
 			}
+		}
 	}
 
 	public void FieldPressed (Field field) //mouse down on field
@@ -67,5 +71,18 @@ public class MapHandler : MonoBehaviour { //TODO add to Map, not to GameHandler?
 	{
 		if (BuildHandler.instance.open)
 			BuildHandler.instance.CloseBuildOptions();
+	}
+
+	public bool InMap(int x, int y)
+	{
+		if (x < 0 || y < 0)
+			return false;
+		if (fields.Length <= x)
+			return false;
+		if (fields [x].Length <= y)
+			return false;
+		if (fields [x] [y] == null)
+			return false;
+		return true;
 	}
 }
