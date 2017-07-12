@@ -62,9 +62,9 @@ public class MapHandler : MonoBehaviour { //TODO add to Map, not to GameHandler?
 
 	public void FieldPressed (Field field) //mouse down on field
 	{
+		chosenField = field;
 		if (BuildHandler.instance.canBuild(field,PlayerHandler.instance.currentPlayer))
 			BuildHandler.instance.OpenBuildOptions(field);
-		chosenField = field;
 	}
 
 	public void FieldReleased (Field field) //mouse down on field

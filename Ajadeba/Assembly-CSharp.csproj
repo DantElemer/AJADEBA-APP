@@ -56,6 +56,8 @@
      <Compile Include="Assets\Scripts\Game\Handlers\TimeHandler.cs" />
      <Compile Include="Assets\Scripts\Game\Options\ARoadOp.cs" />
      <Compile Include="Assets\Scripts\Game\Options\BarrackOption.cs" />
+     <Compile Include="Assets\Scripts\Game\Options\BuildOption.cs" />
+     <Compile Include="Assets\Scripts\Game\Options\CantBuild.cs" />
      <Compile Include="Assets\Scripts\Game\Options\RoadOption.cs" />
      <Compile Include="Assets\Scripts\Game\Options\StrongBaseOp.cs" />
      <Compile Include="Assets\Scripts\MainMenu.cs" />

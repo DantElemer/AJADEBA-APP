@@ -26,8 +26,11 @@ public class Stronghold : FieldPart {
 		for (int i = myField.xCoord - 3; i <= myField.xCoord + 3; i++)
 			for (int j = myField.yCoord - 3; j <= myField.yCoord + 3; j++)
 				if (MapHandler.instance.InMap (i, j))
-					if (Math.Abs(myField.xCoord-i)+Math.Abs(myField.yCoord-j)<=3)
-							MapHandler.instance.fields [i] [j].addOwner (owner);
+					if (Math.Abs (myField.xCoord - i) + Math.Abs (myField.yCoord - j) <= 3) 
+					{
+						MapHandler.instance.fields [i] [j].addOwner (owner);
+						territory.Add (MapHandler.instance.fields [i] [j]);
+					}
 	}
 
 	public int strength

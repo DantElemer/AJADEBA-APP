@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BarrackOption : MonoBehaviour {
+public class BarrackOption : BuildOption {
 
 	// Use this for initialization
 	void Start () 

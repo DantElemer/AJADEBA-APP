@@ -78,7 +78,7 @@ public class Field : MonoBehaviour {
 		/*GameObject strongBase = Instantiate (strongBasePref);
 		strongBase.transform.SetParent (gameObject.transform);
 		strongBase.transform.position = gameObject.transform.position;*/
-		addStronghold (PlayerHandler.instance.currentPlayer);
+		addStronghold (PlayerHandler.instance.currentPlayer); //for testing reasons
 	}
 
 	public void addStronghold (Player owner) //TODO

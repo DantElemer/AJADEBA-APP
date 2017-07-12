@@ -45,7 +45,6 @@ public class BuildHandler : MonoBehaviour {
 		Destroy (bO.gameObject);
 		Destroy (sO.gameObject);
 		open = false;
-		//TODO
 	}
 
 	public bool canBuild(Field field, Player who)
@@ -54,6 +53,11 @@ public class BuildHandler : MonoBehaviour {
 		if (field.isFullForBuilding ()) //TODO: alagút kivétel
 		{ 
 			Debug.Log ("You cannot build there, it's full!");
+			return false;
+		}
+		if (field.hasOtherOwner (who)) 
+		{
+			Debug.Log ("You cannot build there, it's enemy territory!");
 			return false;
 		}
 		return true;
