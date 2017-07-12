@@ -1,6 +1,2 @@
 Szabályzat elolvasása, ha meglesz.
-GameSceen elkezdése: 
-  körökre osztottság, játékosok,
-  legyenek mezők, cuccok rajtuk, 
-  rájuk kattintva jöjjön ki a build options (a megbeszéltek szerinti működéssel),
-  ha nem lehet oda építeni (ellenséges terület, fullos...), hiba üzenet (Debug.Log szinten).
+MouseEventek lecserélése Raycastolásra, vagy egyéb módon megoldani, hogy mindig megfelelően érzékelve legyenek a dolgok (problem: próbálj építeni pl a bal alsó sarokba utat).
