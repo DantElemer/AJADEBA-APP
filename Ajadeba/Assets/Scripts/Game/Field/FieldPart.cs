@@ -3,13 +3,10 @@ using System.Collections;
 
 public class FieldPart : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+	protected Field myField 
+	{
+		get {
+			return (transform.parent.gameObject.GetComponent<Field>() as Field);
+		}
 	}
 }

@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEditor;
+using System.Collections.Generic;
 
 public class Field : MonoBehaviour {
 
@@ -9,10 +11,13 @@ public class Field : MonoBehaviour {
 	public GameObject villagePref;
 	public Barrack barrackPref;
 	public GameObject strongBasePref;
+	public Stronghold strongholdPref;
 	public GameObject northRoadPref;
 	public GameObject eastRoadPref;
 	public GameObject southRoadPref;
 	public GameObject westRoadPref;
+
+	public GameObject territoryPref;
 
 	public const string NORTH = "north";
 	public const string EAST = "east";
@@ -26,6 +31,8 @@ public class Field : MonoBehaviour {
 	public const string EAST_ROAD = "EastRoad(Clone)";
 	public const string SOUTH_ROAD = "SouthRoad(Clone)";
 	public const string WEST_ROAD = "WestRoad(Clone)";
+
+	List<Player> owners = new List<Player>();
 
 	// Use this for initialization
 	void Start () {
@@ -60,7 +67,7 @@ public class Field : MonoBehaviour {
 		Barrack bar = Instantiate (barrackPref);
 		bar.transform.SetParent (gameObject.transform);
 		bar.transform.position = gameObject.transform.position;
-		bar.owner = PlayerHandler.instance.currentPlayer;
+		bar.owner = owner;
 		bar.Inic();
 	}
 
@@ -70,6 +77,39 @@ public class Field : MonoBehaviour {
 		strongBase.transform.SetParent (gameObject.transform);
 		strongBase.transform.position = gameObject.transform.position;
 		//TODO
+	}
+
+	public void addStronghold (Player owner) //TODO
+	{
+		Stronghold stronghold = Instantiate (strongholdPref);
+		stronghold.transform.SetParent (gameObject.transform);
+		stronghold.transform.position = gameObject.transform.position;
+		stronghold.owner = owner;
+		stronghold.Inic();
+		//TODO
+	}
+
+	public bool isOwner(Player who)
+	{
+		return owners.Contains (who);
+	}
+
+	public bool hasOtherOwner (Player than)
+	{
+		foreach (Player p in owners)
+			if (p != than)
+				return true;
+		return false;
+	}
+
+	public void addOwner(Player owner)
+	{
+		GameObject newTer = Instantiate (territoryPref);
+		newTer.transform.SetParent (gameObject.transform);
+		newTer.transform.position = gameObject.transform.position;
+		SpriteRenderer terSR = newTer.GetComponent<SpriteRenderer> ();
+		terSR.sprite = Resources.Load<Sprite> ("Nations/" + owner.nation + "/TerritoryPattern");
+		owners.Add (owner);
 	}
 
 	public bool hasPart(string part)

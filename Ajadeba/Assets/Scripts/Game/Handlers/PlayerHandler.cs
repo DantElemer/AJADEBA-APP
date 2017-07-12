@@ -80,8 +80,10 @@ public class PlayerHandler : MonoBehaviour {
 
 		firstPlayer.name = "First Player";
 		firstPlayer.myName = "Domi";
+		firstPlayer.nation = "Test1";
 		secondPlayer.name = "Second Player";
 		secondPlayer.myName = "Balázs";
+		secondPlayer.nation = "Test2";
 
 		players [0] = firstPlayer;
 		players [1] = secondPlayer;

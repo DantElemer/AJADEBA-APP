@@ -1,23 +1,28 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
-public class Stronghold : MonoBehaviour {
+public class Stronghold : FieldPart {
 
 	public Player owner;
-
-	Field myField 
-	{
-		get {
-			return (transform.parent.gameObject.GetComponent<Field>() as Field);
-		}
-	}
+	List<Field> territory = new List<Field> ();
 
 	public void Inic()
 	{
-		//setting flag
+		SetFlag ();
+		SetTerritory ();
+	}
+
+	void SetFlag()
+	{
 		GameObject flag = gameObject.transform.Find ("Flag").gameObject;
 		SpriteRenderer flagSR = flag.GetComponent<SpriteRenderer> ();
 		flagSR.sprite = owner.flag;
+	}
+
+	void SetTerritory()
+	{
+
 	}
 
 	public int strength

@@ -4,6 +4,7 @@ using System.Collections;
 public class Player : MonoBehaviour {
 
 	public string myName;
+	public string nation;
 	public Sprite flag;
 
 	bool active = false;
@@ -17,9 +18,9 @@ public class Player : MonoBehaviour {
 
 	void SetFlag()
 	{
-		GameObject flagContainer=GameObject.Find ("Flag Collection/Flag1");
-		SpriteRenderer fSR = flagContainer.GetComponent<SpriteRenderer> ();
-		flag = fSR.sprite;
+		flag = Resources.Load<Sprite> ("Nations/"+nation+"/Flag");
+		if (flag == null)
+			Debug.Log ("gebasz a betöltésnél");
 	}
 
 	public void SetActive (bool act)

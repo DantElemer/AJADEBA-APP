@@ -38,7 +38,7 @@ public class MapHandler : MonoBehaviour { //TODO add to Map, not to GameHandler?
 			{
 				fields [10*i+j] = Instantiate(fieldPrefab);
 				fields [10*i+j].index = 10*i+j;
-				fields [10 * i + j].transform.Translate(new Vector3 (Field.WIDTH * i, Field.WIDTH * j, 0));
+				fields [10 * i + j].transform.Translate(new Vector3 (Field.WIDTH * (i-5), Field.WIDTH * (j-5), 0));
 				fields [10 * i + j].transform.SetParent (map.transform);
 				if (Random.value < 0.1)
 					fields [10 * i + j].addVillage ();
