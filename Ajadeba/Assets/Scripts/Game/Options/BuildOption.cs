@@ -4,6 +4,7 @@ using System.Collections;
 public class BuildOption : MonoBehaviour {
 
 	public GameObject cantBuildPref;
+	protected float scale = 1;
 
 	void Awake ()
 	{
@@ -16,11 +17,12 @@ public class BuildOption : MonoBehaviour {
 		GameObject darkening = Instantiate (cantBuildPref);
 		darkening.transform.SetParent (gameObject.transform);
 		darkening.transform.position = gameObject.transform.position;
+		darkening.transform.localScale = new Vector3 (scale, scale, 1);
 
 		gameObject.GetComponent<BoxCollider2D> ().enabled = false;
 	}
 
-	protected bool CanBuild (Field where) //TODO roads must override
+	protected virtual bool CanBuild (Field where) //TODO roads must override
 	{
 		return where.isBlankForBuilding ();
 	}

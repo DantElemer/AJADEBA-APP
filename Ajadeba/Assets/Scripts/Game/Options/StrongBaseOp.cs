@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class StrongBaseOp : MonoBehaviour {
+public class StrongBaseOp : BuildOption {
 
 	void OnMouseOver()
 	{

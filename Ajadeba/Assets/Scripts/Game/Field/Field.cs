@@ -36,9 +36,21 @@ public class Field : MonoBehaviour {
 
 	List<Player> owners = new List<Player>();
 
-	// Use this for initialization
 	void Start () {
 	
+	}
+
+	public static string RoadName (string direction)
+	{
+		if (direction == NORTH)
+			return NORTH_ROAD;
+		if (direction == EAST)
+			return EAST_ROAD;
+		if (direction == SOUTH)
+			return SOUTH_ROAD;
+		if (direction == WEST)
+			return WEST_ROAD;
+		return null;
 	}
 
 	public void addVillage()
