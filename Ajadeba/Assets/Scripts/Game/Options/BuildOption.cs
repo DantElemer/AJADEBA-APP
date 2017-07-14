@@ -24,7 +24,7 @@ public class BuildOption : MonoBehaviour {
 
 	protected virtual bool CanBuild (Field where) //TODO roads must override
 	{
-		return where.isBlankForBuilding ();
+		return where.IsBlankForBuilding ();
 	}
 	// TODO: 
 }

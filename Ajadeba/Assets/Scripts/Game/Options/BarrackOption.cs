@@ -14,6 +14,6 @@ public class BarrackOption : BuildOption {
 	void OnMouseOver()
 	{
 		if (Input.GetMouseButtonUp (0)) 
-			MapHandler.instance.chosenField.addBarrack (PlayerHandler.instance.currentPlayer);
+			MapHandler.instance.chosenField.AddBarrack (PlayerHandler.instance.currentPlayer);
 	}
 }

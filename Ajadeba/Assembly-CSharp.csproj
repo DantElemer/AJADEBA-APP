@@ -50,8 +50,9 @@
      <Compile Include="Assets\Scripts\Game\Field\FieldPart.cs" />
      <Compile Include="Assets\Scripts\Game\Field\Stronghold.cs" />
      <Compile Include="Assets\Scripts\Game\Game.cs" />
-     <Compile Include="Assets\Scripts\Game\Handlers\BuildHandler.cs" />
-     <Compile Include="Assets\Scripts\Game\Handlers\MapHandler.cs" />
+     <Compile Include="Assets\Scripts\Game\Handlers\Map\BuildHandler.cs" />
+     <Compile Include="Assets\Scripts\Game\Handlers\Map\Connection.cs" />
+     <Compile Include="Assets\Scripts\Game\Handlers\Map\MapHandler.cs" />
      <Compile Include="Assets\Scripts\Game\Handlers\PlayerHandler.cs" />
      <Compile Include="Assets\Scripts\Game\Handlers\TimeHandler.cs" />
      <Compile Include="Assets\Scripts\Game\Options\ARoadOp.cs" />

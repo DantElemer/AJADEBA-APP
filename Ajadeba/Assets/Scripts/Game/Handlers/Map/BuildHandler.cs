@@ -29,11 +29,11 @@ public class BuildHandler : MonoBehaviour {
 
 	public void OpenBuildOptions (Field field)
 	{
-		rO = Instantiate (roadOptionPref); //TODO show around the clicked field
+		rO = Instantiate (roadOptionPref); 
 		rO.transform.position = field.transform.position+Vector3.right;
-		bO = Instantiate (barrackOptionPref); //TODO show around the clicked field
+		bO = Instantiate (barrackOptionPref); 
 		bO.transform.position = field.transform.position+Vector3.left;
-		sO = Instantiate (strongBaseOpPref); //TODO show around the clicked field
+		sO = Instantiate (strongBaseOpPref); 
 		sO.transform.position = field.transform.position+Vector3.up;
 		open = true;
 	}
@@ -47,17 +47,16 @@ public class BuildHandler : MonoBehaviour {
 		open = false;
 	}
 
-	public bool canBuild(Field field, Player who)
+	public bool CanBuild(Field field, Player who)
 	{
-		//TODO ellenőrizni, h tud-e field-re valamit who (terület, ott lévő objektumok)
-		if (field.isFullForBuilding ()) //TODO: alagút kivétel
+		if (field.IsFullForBuilding ()) //TODO: alagút kivétel
 		{ 
 			Debug.Log ("You cannot build there, it's full!");
 			return false;
 		}
-		if (field.hasOtherOwner (who)) 
+		if (field.HasOtherOwner (who)) 
 		{
-			Debug.Log ("You cannot build there, it's enemy territory!");
+			Debug.Log ("You cannot build there, it's not your territory territory!");
 			return false;
 		}
 		return true;

@@ -28,7 +28,7 @@ public class Stronghold : FieldPart {
 				if (MapHandler.instance.InMap (i, j))
 					if (Math.Abs (myField.xCoord - i) + Math.Abs (myField.yCoord - j) <= 3) 
 					{
-						MapHandler.instance.fields [i] [j].addOwner (owner);
+						MapHandler.instance.fields [i] [j].AddOwner (owner);
 						territory.Add (MapHandler.instance.fields [i] [j]);
 					}
 	}

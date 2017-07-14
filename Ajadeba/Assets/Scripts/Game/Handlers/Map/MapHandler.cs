@@ -12,6 +12,9 @@ public class MapHandler : MonoBehaviour { //TODO add to Map, not to GameHandler?
 
 	public Field chosenField;
 
+	public bool checkMode = false;
+	public Field fromF;
+
 
 	public static MapHandler instance //singleton magic
 	{
@@ -44,16 +47,16 @@ public class MapHandler : MonoBehaviour { //TODO add to Map, not to GameHandler?
 					fields [i] [j].transform.Translate (new Vector3 (Field.WIDTH * (i - 5), Field.WIDTH * (j - 5), 0));
 					fields [i] [j].transform.SetParent (map.transform);
 					if (Random.value < 0.1)
-						fields [i] [j].addVillage ();
+						fields [i] [j].AddVillage ();
 					else {
 						if (Random.value < 0.1)
-							fields [i] [j].addRoad (Field.NORTH);
+							fields [i] [j].AddRoad (Field.NORTH);
 						if (Random.value < 0.1)
-							fields [i] [j].addRoad (Field.EAST);
+							fields [i] [j].AddRoad (Field.EAST);
 						if (Random.value < 0.1)
-							fields [i] [j].addRoad (Field.SOUTH);
+							fields [i] [j].AddRoad (Field.SOUTH);
 						if (Random.value < 0.1)
-							fields [i] [j].addRoad (Field.WEST);
+							fields [i] [j].AddRoad (Field.WEST);
 					}
 				} 
 			}
@@ -62,9 +65,18 @@ public class MapHandler : MonoBehaviour { //TODO add to Map, not to GameHandler?
 
 	public void FieldPressed (Field field) //mouse down on field
 	{
-		chosenField = field;
-		if (BuildHandler.instance.canBuild(field,PlayerHandler.instance.currentPlayer))
-			BuildHandler.instance.OpenBuildOptions(field);
+		if (checkMode) {
+			if (fromF == null)
+				fromF = field;
+			else {
+				Debug.Log (Connection.IsConnected (fromF, field, PlayerHandler.instance.currentPlayer));
+				fromF = null;
+			}
+		} else {
+			chosenField = field;
+			if (BuildHandler.instance.CanBuild (field, PlayerHandler.instance.currentPlayer))
+				BuildHandler.instance.OpenBuildOptions (field);
+		}
 	}
 
 	public void FieldReleased (Field field) //mouse down on field

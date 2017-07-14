@@ -29,6 +29,7 @@ public class Field : MonoBehaviour {
 	public const string BARRACK = "Barrack(Clone)";
 	public const string VILLAGE = "Village(Clone)";
 	public const string STRONGHOLD_BASE = "StrongholdBase(Clone)";
+	public const string STRONGHOLD = "Stronghold(Clone)";
 	public const string NORTH_ROAD = "NorthRoad(Clone)";
 	public const string EAST_ROAD = "EastRoad(Clone)";
 	public const string SOUTH_ROAD = "SouthRoad(Clone)";
@@ -53,14 +54,14 @@ public class Field : MonoBehaviour {
 		return null;
 	}
 
-	public void addVillage()
+	public void AddVillage()
 	{
 		GameObject vill = Instantiate (villagePref);
 		vill.transform.SetParent (gameObject.transform);
 		vill.transform.position = gameObject.transform.position;
 	}
 
-	public void addRoad(string dir)
+	public void AddRoad(string dir)
 	{
 		GameObject road = null;
 		if (dir==NORTH)
@@ -76,7 +77,7 @@ public class Field : MonoBehaviour {
 		road.transform.position = gameObject.transform.position;
 	}
 
-	public void addBarrack (Player owner)
+	public void AddBarrack (Player owner)
 	{
 		Barrack bar = Instantiate (barrackPref);
 		bar.transform.SetParent (gameObject.transform);
@@ -85,15 +86,15 @@ public class Field : MonoBehaviour {
 		bar.Inic();
 	}
 
-	public void addStrongBase () 
+	public void AddStrongBase () 
 	{
 		/*GameObject strongBase = Instantiate (strongBasePref);
 		strongBase.transform.SetParent (gameObject.transform);
 		strongBase.transform.position = gameObject.transform.position;*/
-		addStronghold (PlayerHandler.instance.currentPlayer); //for testing reasons
+		AddStronghold (PlayerHandler.instance.currentPlayer); //for testing reasons
 	}
 
-	public void addStronghold (Player owner) //TODO
+	public void AddStronghold (Player owner) //TODO
 	{
 		Stronghold stronghold = Instantiate (strongholdPref);
 		stronghold.transform.SetParent (gameObject.transform);
@@ -103,12 +104,12 @@ public class Field : MonoBehaviour {
 		//TODO
 	}
 
-	public bool isOwner(Player who)
+	public bool IsOwner(Player who)
 	{
 		return owners.Contains (who);
 	}
 
-	public bool hasOtherOwner (Player than)
+	public bool HasOtherOwner (Player than)
 	{
 		foreach (Player p in owners)
 			if (p != than)
@@ -116,7 +117,12 @@ public class Field : MonoBehaviour {
 		return false;
 	}
 
-	public void addOwner(Player owner)
+	public bool HasEnemyOwner (Player enemyToWhom)
+	{
+		return HasOtherOwner (enemyToWhom); //TODO
+	}
+
+	public void AddOwner(Player owner)
 	{
 		GameObject newTer = Instantiate (territoryPref);
 		newTer.transform.SetParent (gameObject.transform);
@@ -126,7 +132,7 @@ public class Field : MonoBehaviour {
 		owners.Add (owner);
 	}
 
-	public bool hasPart(string part)
+	public bool HasPart(string part)
 	{
 		Transform c=gameObject.transform.Find (part);
 		if (c == null)
@@ -134,36 +140,46 @@ public class Field : MonoBehaviour {
 		return true;
 	}
 
-	public bool isBlankForBuilding() //alagútak nem számítanak
+	public bool IsBlankForBuilding() //alagútak nem számítanak
 	{
-		if (hasPart (BARRACK) || hasPart (STRONGHOLD_BASE) || hasPart (VILLAGE) || hasPart (NORTH_ROAD) || hasPart (EAST_ROAD) 
-			|| hasPart (SOUTH_ROAD) || hasPart (WEST_ROAD))
+		if (HasPart (BARRACK) || HasPart (STRONGHOLD_BASE) || HasPart (STRONGHOLD) || HasPart (VILLAGE) || HasPart (NORTH_ROAD) || HasPart (EAST_ROAD) 
+			|| HasPart (SOUTH_ROAD) || HasPart (WEST_ROAD))
 			return false;
 		return true;
 	}
 
-	public bool isFullForBuilding() //alagútak nem számítanak
+	public bool IsFullForBuilding() //alagútak nem számítanak
 	{
-		if (hasPart (BARRACK) || hasPart (STRONGHOLD_BASE) || hasPart (VILLAGE) ||
-		    hasPart (NORTH_ROAD) && hasPart (EAST_ROAD) && hasPart (SOUTH_ROAD) && hasPart (WEST_ROAD))
+		if (HasPart (BARRACK) || HasPart (STRONGHOLD) || HasPart (STRONGHOLD_BASE) || HasPart (VILLAGE) ||
+		    HasPart (NORTH_ROAD) && HasPart (EAST_ROAD) && HasPart (SOUTH_ROAD) && HasPart (WEST_ROAD))
 			return true;
 		return false;
 	}
 
 	public int BarrackStrength()
 	{
-		if (hasPart (BARRACK))
+		if (HasPart (BARRACK))
 			return myBarrack.strength;
 		else
 			return 0;
 	}
 
-	Barrack myBarrack
+	public Barrack myBarrack
 	{
 		get
 		{
-			if (hasPart (BARRACK))
+			if (HasPart (BARRACK))
 				return GetComponentInChildren<Barrack> () as Barrack;
+			return null;
+		}
+	}
+
+	public Stronghold myStronghold
+	{
+		get
+		{
+			if (HasPart (STRONGHOLD))
+				return GetComponentInChildren<Stronghold> () as Stronghold;
 			return null;
 		}
 	}

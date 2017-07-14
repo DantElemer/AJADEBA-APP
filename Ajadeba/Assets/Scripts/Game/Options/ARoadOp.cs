@@ -13,11 +13,11 @@ public class ARoadOp : BuildOption {
 	void OnMouseOver()
 	{
 		if (Input.GetMouseButtonUp (0))
-			MapHandler.instance.chosenField.addRoad (direction);
+			MapHandler.instance.chosenField.AddRoad (direction);
 	}
 
 	protected override bool CanBuild (Field where)
 	{
-		return !where.hasPart(Field.RoadName(direction));
+		return !where.HasPart(Field.RoadName(direction));
 	}
 }
