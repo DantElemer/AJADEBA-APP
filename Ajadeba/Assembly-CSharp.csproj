@@ -49,6 +49,7 @@
      <Compile Include="Assets\Scripts\Game\Field\Field.cs" />
      <Compile Include="Assets\Scripts\Game\Field\FieldPart.cs" />
      <Compile Include="Assets\Scripts\Game\Field\Stronghold.cs" />
+     <Compile Include="Assets\Scripts\Game\Field\Village.cs" />
      <Compile Include="Assets\Scripts\Game\Game.cs" />
      <Compile Include="Assets\Scripts\Game\Handlers\Map\BuildHandler.cs" />
      <Compile Include="Assets\Scripts\Game\Handlers\Map\Connection.cs" />

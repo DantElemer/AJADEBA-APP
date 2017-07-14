@@ -3,7 +3,7 @@ using System.Collections;
 
 public class FieldPart : MonoBehaviour {
 
-	protected Field myField 
+	public Field myField 
 	{
 		get {
 			return (transform.parent.gameObject.GetComponent<Field>() as Field);

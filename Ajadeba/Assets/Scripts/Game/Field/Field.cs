@@ -10,7 +10,7 @@ public class Field : MonoBehaviour {
 	public int yCoord;
 	public const float WIDTH = 0.3f;
 
-	public GameObject villagePref;
+	public Village villagePref;
 	public Barrack barrackPref;
 	public GameObject strongBasePref;
 	public Stronghold strongholdPref;
@@ -56,7 +56,7 @@ public class Field : MonoBehaviour {
 
 	public void AddVillage()
 	{
-		GameObject vill = Instantiate (villagePref);
+		Village vill = Instantiate (villagePref);
 		vill.transform.SetParent (gameObject.transform);
 		vill.transform.position = gameObject.transform.position;
 	}

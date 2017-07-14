@@ -6,7 +6,7 @@ using System;
 public class Stronghold : FieldPart {
 
 	public Player owner;
-	List<Field> territory = new List<Field> ();
+	public List<Field> territory = new List<Field> ();
 
 	public void Inic()
 	{

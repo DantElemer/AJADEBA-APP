@@ -118,7 +118,7 @@ public class Connection : MonoBehaviour {
 	    }
 	};
 
-	public static bool IsConnected (Field from, Field to, Player who, bool canUseStrongs = false, bool canEnterEnemyTer = false)
+	public static bool IsConnected (Field from, Field to, Player who, bool canUseStrongs = false, bool canEnterEnemyTer = true)
 	{
 		Player strongholdRoads; // the player whose strongholds can be used as roads, it's null if can't use strongholds as roads
 		if (canUseStrongs)
@@ -146,6 +146,43 @@ public class Connection : MonoBehaviour {
 		points [from.xCoord] [from.yCoord].westMeet = true;
 	    return points[from.xCoord][from.yCoord].isAimPoint(points[to.xCoord][to.yCoord],points);
 	}
+
+	public static bool canGo (Barrack from2, Stronghold to)
+	{
+		return IsConnected (from2.myField, to.myField, from2.owner, true);
+	}
+
+	public static bool canGo (Stronghold from2, Barrack to)
+	{
+		return IsConnected (from2.myField, to.myField, from2.owner, false, false);
+	}
+
+	public static bool canGo (Stronghold from2, Stronghold to)
+	{
+		if (from2.owner==to.owner) //its just a nice walk to the neighbours
+			return IsConnected (from2, to, from2.owner, true); //I don't see a reason for checking this, maybe the two bool shall be the opposite.
+
+		foreach (Field terFie in to.territory) //assault check...
+		{
+			if (MapHandler.instance.InMap(terFie.xCoord,terFie.yCoord)) //TODO pálya mellett közvetlenül van a mocskos terület? Ajánlat: pályán kívül ne legyen terület (ez esetben felesleges ez az if).
+				if (IsConnected(from2.myField,terFie,from2.owner,false,false))
+					return true;
+		}
+		return false;
+	}
+
+	public static bool canGo (Village from2, Barrack to)
+	{
+		return IsConnected (from2.myField, to.myField, to.owner);
+	}
+
+	//TODO test CanGo-s
+
+
+
+
+
+
 
 /*bool gameScreen::isConnected(field from, field to)
 {
