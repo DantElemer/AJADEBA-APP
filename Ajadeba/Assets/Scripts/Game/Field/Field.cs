@@ -12,7 +12,7 @@ public class Field : MonoBehaviour {
 
 	public Village villagePref;
 	public Barrack barrackPref;
-	public GameObject strongBasePref;
+	public StrongBase strongBasePref;
 	public Stronghold strongholdPref;
 	public GameObject northRoadPref;
 	public GameObject eastRoadPref;
@@ -84,6 +84,7 @@ public class Field : MonoBehaviour {
 		bar.transform.position = gameObject.transform.position;
 		bar.owner = owner;
 		bar.Inic();
+		Debug.Log (bar.strength);
 	}
 
 	public void AddStrongBase () 
@@ -162,6 +163,16 @@ public class Field : MonoBehaviour {
 			return myBarrack.strength;
 		else
 			return 0;
+	}
+
+	public Village myVillage
+	{
+		get
+		{
+			if (HasPart (VILLAGE))
+				return GetComponentInChildren<Village> () as Village;
+			return null;
+		}
 	}
 
 	public Barrack myBarrack

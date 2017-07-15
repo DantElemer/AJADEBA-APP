@@ -3,13 +3,11 @@ using System.Collections;
 
 public class Village : FieldPart {
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+	int myCapacity=1;
+
+	public int capacity {
+		get {
+			return myCapacity;
+		}
 	}
 }

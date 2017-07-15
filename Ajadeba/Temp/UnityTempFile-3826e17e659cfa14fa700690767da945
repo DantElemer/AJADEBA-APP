@@ -84,11 +84,13 @@
 Assets/Scripts/Game/Field/Barrack.cs
 Assets/Scripts/Game/Field/Field.cs
 Assets/Scripts/Game/Field/FieldPart.cs
+Assets/Scripts/Game/Field/StrongBase.cs
 Assets/Scripts/Game/Field/Stronghold.cs
+Assets/Scripts/Game/Field/Village.cs
 Assets/Scripts/Game/Game.cs
-Assets/Scripts/Game/Handlers/Connection.cs
 Assets/Scripts/Game/Handlers/Map/BuildHandler.cs
-Assets/Scripts/Game/Handlers/MapHandler.cs
+Assets/Scripts/Game/Handlers/Map/Connection.cs
+Assets/Scripts/Game/Handlers/Map/MapHandler.cs
 Assets/Scripts/Game/Handlers/PlayerHandler.cs
 Assets/Scripts/Game/Handlers/TimeHandler.cs
 Assets/Scripts/Game/Options/ARoadOp.cs

@@ -48,6 +48,7 @@
      <Compile Include="Assets\Scripts\Game\Field\Barrack.cs" />
      <Compile Include="Assets\Scripts\Game\Field\Field.cs" />
      <Compile Include="Assets\Scripts\Game\Field\FieldPart.cs" />
+     <Compile Include="Assets\Scripts\Game\Field\StrongBase.cs" />
      <Compile Include="Assets\Scripts\Game\Field\Stronghold.cs" />
      <Compile Include="Assets\Scripts\Game\Field\Village.cs" />
      <Compile Include="Assets\Scripts\Game\Game.cs" />

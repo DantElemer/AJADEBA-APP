@@ -147,20 +147,25 @@ public class Connection : MonoBehaviour {
 	    return points[from.xCoord][from.yCoord].isAimPoint(points[to.xCoord][to.yCoord],points);
 	}
 
-	public static bool canGo (Barrack from2, Stronghold to)
+	public static bool CanGo (Barrack from2, Stronghold to)
 	{
 		return IsConnected (from2.myField, to.myField, from2.owner, true);
 	}
 
-	public static bool canGo (Stronghold from2, Barrack to)
+	public static bool CanGo (Barrack from2, StrongBase to)
+	{
+		return IsConnected (from2.myField, to.myField, from2.owner, true);
+	}
+
+	public static bool CanGo (Stronghold from2, Barrack to)
 	{
 		return IsConnected (from2.myField, to.myField, from2.owner, false, false);
 	}
 
-	public static bool canGo (Stronghold from2, Stronghold to)
+	public static bool CanGo (Stronghold from2, Stronghold to)
 	{
 		if (from2.owner==to.owner) //its just a nice walk to the neighbours
-			return IsConnected (from2, to, from2.owner, true); //I don't see a reason for checking this, maybe the two bool shall be the opposite.
+			return IsConnected (from2.myField, to.myField, from2.owner, true); //I don't see a reason for checking this, maybe the two bool shall be the opposite.
 
 		foreach (Field terFie in to.territory) //assault check...
 		{
@@ -171,7 +176,7 @@ public class Connection : MonoBehaviour {
 		return false;
 	}
 
-	public static bool canGo (Village from2, Barrack to)
+	public static bool CanGo (Village from2, Barrack to)
 	{
 		return IsConnected (from2.myField, to.myField, to.owner);
 	}
