@@ -195,6 +195,16 @@ public class Field : MonoBehaviour {
 		}
 	}
 
+	public StrongBase myStrongholdBase
+	{
+		get
+		{
+			if (HasPart (STRONGHOLD_BASE))
+				return GetComponentInChildren<StrongBase> () as StrongBase;
+			return null;
+		}
+	}
+
 	void OnMouseDown()
 	{
 		MapHandler.instance.FieldPressed(this);
