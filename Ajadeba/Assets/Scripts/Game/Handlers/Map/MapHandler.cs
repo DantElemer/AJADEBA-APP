@@ -83,6 +83,9 @@ public class MapHandler : MonoBehaviour { //TODO add to Map, not to GameHandler?
 	{
 		if (BuildHandler.instance.open)
 			BuildHandler.instance.CloseBuildOptions();
+
+
+		BaseConquering.ConquerCheck (); //TODO értelmesebb helyre kéne rakni, így eggyel "késik"
 	}
 
 	public bool InMap(int x, int y)

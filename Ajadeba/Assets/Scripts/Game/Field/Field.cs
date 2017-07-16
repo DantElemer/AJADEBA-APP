@@ -84,15 +84,20 @@ public class Field : MonoBehaviour {
 		bar.transform.position = gameObject.transform.position;
 		bar.owner = owner;
 		bar.Inic();
-		Debug.Log (bar.strength);
 	}
 
-	public void AddStrongBase () 
+	public void AddStrongBase (Player builder) 
 	{
-		/*GameObject strongBase = Instantiate (strongBasePref);
+		StrongBase strongBase = Instantiate (strongBasePref);
 		strongBase.transform.SetParent (gameObject.transform);
-		strongBase.transform.position = gameObject.transform.position;*/
-		AddStronghold (PlayerHandler.instance.currentPlayer); //for testing reasons
+		strongBase.transform.position = gameObject.transform.position;
+		strongBase.builder = builder;
+		//AddStronghold (PlayerHandler.instance.currentPlayer); //for testing reasons
+	}
+
+	public void RemoveStrongBase () 
+	{
+		DestroyImmediate (transform.Find (STRONGHOLD_BASE).gameObject); //a mocsok Unity amúgy késlelteti és a láncszabály miatt a baseCheck végtelen ciklusba kerül
 	}
 
 	public void AddStronghold (Player owner) //TODO

@@ -88,6 +88,7 @@ Assets/Scripts/Game/Field/StrongBase.cs
 Assets/Scripts/Game/Field/Stronghold.cs
 Assets/Scripts/Game/Field/Village.cs
 Assets/Scripts/Game/Game.cs
+Assets/Scripts/Game/Handlers/Map/BaseConquering.cs
 Assets/Scripts/Game/Handlers/Map/BuildHandler.cs
 Assets/Scripts/Game/Handlers/Map/Connection.cs
 Assets/Scripts/Game/Handlers/Map/MapHandler.cs
