@@ -86,6 +86,11 @@ public class Field : MonoBehaviour {
 		bar.Inic();
 	}
 
+	public void RemoveBarrack () 
+	{
+		DestroyImmediate (transform.Find (BARRACK).gameObject); //a mocsok Unity amúgy késlelteti és a láncszabály miatt esetleg más erőviszonyok lennének
+	}
+
 	public void AddStrongBase (Player builder) 
 	{
 		StrongBase strongBase = Instantiate (strongBasePref);

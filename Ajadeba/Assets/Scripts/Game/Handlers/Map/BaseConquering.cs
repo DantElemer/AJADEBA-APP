@@ -4,6 +4,19 @@ using System.Collections.Generic;
 
 public class BaseConquering : MonoBehaviour {
 
+	static void DestroyBasedOnTerritory() //destroys undefended barracks in enemy territory, and strongBases in territory
+	{
+		foreach (Field[] row in MapHandler.instance.fields)
+			foreach (Field f in row)
+				if (f != null) //could use inMap as well
+				{
+					if (f.HasPart (Field.STRONGHOLD_BASE) && f.HasOtherOwner (null))
+						f.RemoveStrongBase ();
+					if (f.HasPart (Field.BARRACK) && !f.IsOwner (f.myBarrack.owner) && f.HasEnemyOwner (f.myBarrack.owner))
+						f.RemoveBarrack ();
+				}
+	}
+
 	static void Conquer (Field baseField, Player conqueror)
 	{
 		baseField.RemoveStrongBase ();
@@ -58,9 +71,11 @@ public class BaseConquering : MonoBehaviour {
 							
 					}
 				}
-		Debug.Log ("new?"+newStrongCreated);
-		if (newStrongCreated)
-			ConquerCheck ();
+
+		if (newStrongCreated) {
+			DestroyBasedOnTerritory ();
+			ConquerCheck (); //láncszabály
+		}
 		
 		/// végigmenni az összes mezőn, megvizsgálni a base-ket, hogy
 		/// van-e játékos aki megkaphatja
