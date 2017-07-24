@@ -56,6 +56,7 @@
      <Compile Include="Assets\Scripts\Game\Handlers\Map\BuildHandler.cs" />
      <Compile Include="Assets\Scripts\Game\Handlers\Map\Connection.cs" />
      <Compile Include="Assets\Scripts\Game\Handlers\Map\MapHandler.cs" />
+     <Compile Include="Assets\Scripts\Game\Handlers\MessageHandler.cs" />
      <Compile Include="Assets\Scripts\Game\Handlers\PlayerHandler.cs" />
      <Compile Include="Assets\Scripts\Game\Handlers\TimeHandler.cs" />
      <Compile Include="Assets\Scripts\Game\Options\ARoadOp.cs" />

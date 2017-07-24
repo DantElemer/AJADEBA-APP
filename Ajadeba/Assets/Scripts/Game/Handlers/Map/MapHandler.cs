@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class MapHandler : MonoBehaviour { //TODO add to Map, not to GameHandler?
+public class MapHandler : MonoBehaviour { 
 
 	private static MapHandler sInstance = null;
 
