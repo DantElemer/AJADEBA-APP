@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class Barrack : FieldPart {
 
 	public Player owner;
+	public bool isLazy = false;
 
 	public void Inic()
 	{

@@ -33,6 +33,18 @@ public class Stronghold : FieldPart {
 					}
 	}
 
+	void RemoveTerritory()
+	{
+		foreach (Field f in territory)
+			f.RemoveOwner (owner);
+	}
+
+	public void Die()
+	{
+		RemoveTerritory ();
+		DestroyImmediate (gameObject);
+	}
+
 	public int strength
 	{
 		get
@@ -45,6 +57,22 @@ public class Stronghold : FieldPart {
 					if (Connection.CanGo (f.myBarrack, this))
 						str += f.myBarrack.strength;
 			return str;
+		}
+	}
+
+	public int defStrength
+	{
+		get
+		{
+			return strength;
+		}
+	}
+
+	public int attStrength
+	{
+		get
+		{
+			return strength;
 		}
 	}
 }

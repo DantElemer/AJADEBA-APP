@@ -115,6 +115,11 @@ public class Field : MonoBehaviour {
 		//TODO
 	}
 
+	public void RemoveStronghold () 
+	{
+		myStronghold.Die ();
+	}
+
 	public bool IsOwner(Player who)
 	{
 		return owners.Contains (who);
@@ -138,9 +143,20 @@ public class Field : MonoBehaviour {
 		GameObject newTer = Instantiate (territoryPref);
 		newTer.transform.SetParent (gameObject.transform);
 		newTer.transform.position = gameObject.transform.position;
+		newTer.name = "Territory (" + owner.myName + ")";
 		SpriteRenderer terSR = newTer.GetComponent<SpriteRenderer> ();
 		terSR.sprite = Resources.Load<Sprite> ("Nations/" + owner.nation + "/TerritoryPattern");
 		owners.Add (owner);
+		if (HasPart (BARRACK))
+			myBarrack.isLazy = true; // if a barrack becomes defended, it becomes lazy
+	}
+
+	public void RemoveOwner(Player owner)
+	{
+		string TERRITORY_NAME = "Territory (" + owner.myName + ")"; // ok it's not a constant, but it shouldn't change (cannot make it const)
+		Destroy (gameObject.transform.Find (TERRITORY_NAME).gameObject); 
+
+		owners.Remove (owner);
 	}
 
 	public bool HasPart(string part)

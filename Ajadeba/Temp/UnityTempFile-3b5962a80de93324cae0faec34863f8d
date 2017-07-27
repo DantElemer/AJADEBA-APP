@@ -92,9 +92,9 @@ Assets/Scripts/Game/Handlers/Map/BaseConquering.cs
 Assets/Scripts/Game/Handlers/Map/BuildHandler.cs
 Assets/Scripts/Game/Handlers/Map/Connection.cs
 Assets/Scripts/Game/Handlers/Map/MapHandler.cs
+Assets/Scripts/Game/Handlers/MessageHandler.cs
 Assets/Scripts/Game/Handlers/PlayerHandler.cs
 Assets/Scripts/Game/Handlers/TimeHandler.cs
-"Assets/Scripts/Game/Message Panel/MessageHandler.cs"
 Assets/Scripts/Game/Options/ARoadOp.cs
 Assets/Scripts/Game/Options/BarrackOption.cs
 Assets/Scripts/Game/Options/BuildOption.cs

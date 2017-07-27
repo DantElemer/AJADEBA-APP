@@ -88,4 +88,9 @@ public class PlayerHandler : MonoBehaviour {
 		players [0] = firstPlayer;
 		players [1] = secondPlayer;
 	}
+
+	public bool areEnemies(Player one, Player two)
+	{
+		return one != two;
+	}
 }
