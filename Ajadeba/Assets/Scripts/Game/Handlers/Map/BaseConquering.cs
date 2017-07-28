@@ -21,7 +21,6 @@ public class BaseConquering : MonoBehaviour {
 	{
 		baseField.RemoveStrongBase ();
 		baseField.AddStronghold (conqueror);
-		Debug.Log (baseField.HasPart(Field.STRONGHOLD_BASE));
 	}
 
 	public static void ConquerCheck()

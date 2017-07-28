@@ -11,7 +11,7 @@ public class MapHandler : MonoBehaviour {
 	public Field[][] fields; 
 
 	public Field chosenField; //the field currently pressed
-	public Field assaultBase; // the field from which the assault can start
+	Field assaultBase; // the field from which the assault can start
 	float timeSincePress = 0; // if a a field is being pressed it stores how much time passed since the start of the press, otherwise zero
 
 	public bool checkMode = false;
@@ -41,7 +41,7 @@ public class MapHandler : MonoBehaviour {
 	{
 		if (!Input.GetMouseButton (0)) //left button is not pressed
 			chosenField = null;
-		if (chosenField!=null)
+		if (chosenField != null) 
 			timeSincePress += Time.deltaTime;
 	}
 
@@ -86,10 +86,23 @@ public class MapHandler : MonoBehaviour {
 					
 	}
 
+	void AssaultOn()
+	{
+		assaultBase = chosenField;
+		assaultBase.myStronghold.transform.Find ("AssaultOn").gameObject.SetActive (true);
+	}
+
+	void AssaultOff()
+	{
+		if (assaultBase != null) {
+			assaultBase.myStronghold.transform.Find ("AssaultOn").gameObject.SetActive (false);
+			assaultBase = null;
+		} else
+			Debug.Log ("Nincs is assault!");
+	}
+
 	void FieldClicked()
 	{
-		Debug.Log ("CLICKED!");
-
 		if (assaultBase != null) // one stronghold is chosen
 		{
 			if (chosenField.HasPart (Field.STRONGHOLD))  // and the field clicked also has a stronghold
@@ -100,17 +113,13 @@ public class MapHandler : MonoBehaviour {
 				chosenField.RemoveStronghold ();
 				KillUndefendedLazies ();
 			}
-			assaultBase=null;
+			AssaultOff ();
 		}
-		else if (chosenField.HasPart (Field.STRONGHOLD)) {
+		else if (chosenField.HasPart (Field.STRONGHOLD)) 
+		{
 			if (chosenField.myStronghold.owner == PlayerHandler.instance.currentPlayer)
-				assaultBase = chosenField;
-		}
-		else {
-			assaultBase = null;
-			Debug.Log ("sajna");
-		}
-			
+				AssaultOn ();
+		}			
 	}
 
 	public void FieldPressed (Field field) //mouse down on field
@@ -138,7 +147,7 @@ public class MapHandler : MonoBehaviour {
 		if (timeSincePress < MAX_TIME_FOR_CLICK)
 			FieldClicked ();
 		else
-			assaultBase = null;
+			AssaultOff ();
 		timeSincePress = 0;
 
 		BaseConquering.ConquerCheck (); //TODO értelmesebb helyre kéne rakni, így eggyel "késik"

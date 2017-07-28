@@ -14,6 +14,7 @@ public class Field : MonoBehaviour {
 	public Barrack barrackPref;
 	public StrongBase strongBasePref;
 	public Stronghold strongholdPref;
+	public Ruin ruinPref;
 	public GameObject northRoadPref;
 	public GameObject eastRoadPref;
 	public GameObject southRoadPref;
@@ -30,6 +31,7 @@ public class Field : MonoBehaviour {
 	public const string VILLAGE = "Village(Clone)";
 	public const string STRONGHOLD_BASE = "StrongholdBase(Clone)";
 	public const string STRONGHOLD = "Stronghold(Clone)";
+	public const string RUIN = "Ruin(Clone)";
 	public const string NORTH_ROAD = "NorthRoad(Clone)";
 	public const string EAST_ROAD = "EastRoad(Clone)";
 	public const string SOUTH_ROAD = "SouthRoad(Clone)";
@@ -61,6 +63,13 @@ public class Field : MonoBehaviour {
 		vill.transform.position = gameObject.transform.position;
 	}
 
+	public void AddRuin()
+	{
+		Ruin ruin = Instantiate (ruinPref);
+		ruin.transform.SetParent (gameObject.transform);
+		ruin.transform.position = gameObject.transform.position;
+	}
+
 	public void AddRoad(string dir)
 	{
 		GameObject road = null;
@@ -89,6 +98,7 @@ public class Field : MonoBehaviour {
 	public void RemoveBarrack () 
 	{
 		DestroyImmediate (transform.Find (BARRACK).gameObject); //a mocsok Unity amúgy késlelteti és a láncszabály miatt esetleg más erőviszonyok lennének
+		AddRuin();	
 	}
 
 	public void AddStrongBase (Player builder) 
@@ -103,6 +113,7 @@ public class Field : MonoBehaviour {
 	public void RemoveStrongBase () 
 	{
 		DestroyImmediate (transform.Find (STRONGHOLD_BASE).gameObject); //a mocsok Unity amúgy késlelteti és a láncszabály miatt a baseCheck végtelen ciklusba kerül
+		AddRuin();
 	}
 
 	public void AddStronghold (Player owner) //TODO
@@ -118,6 +129,7 @@ public class Field : MonoBehaviour {
 	public void RemoveStronghold () 
 	{
 		myStronghold.Die ();
+		AddRuin ();
 	}
 
 	public bool IsOwner(Player who)
