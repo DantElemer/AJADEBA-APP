@@ -17,7 +17,8 @@ public class MapHandler : MonoBehaviour {
 	public bool checkMode = false;
 	public Field fromF;
 
-
+	const float MAX_TIME_FOR_CLICK = 0.2f;
+	bool longPress=false;
 
 
 	public static MapHandler instance //singleton magic
@@ -39,10 +40,18 @@ public class MapHandler : MonoBehaviour {
 
 	void Update()
 	{
-		if (!Input.GetMouseButton (0)) //left button is not pressed
+		if (!Input.GetMouseButton (0)) { //left button is not pressed
 			chosenField = null;
+			longPress = false;
+		}
 		if (chosenField != null) 
+		{
 			timeSincePress += Time.deltaTime;
+			if (timeSincePress > MAX_TIME_FOR_CLICK && !longPress) {
+				LongPress ();
+				longPress = true;
+			}
+		}
 	}
 
 	void GenerateMap()
@@ -131,11 +140,8 @@ public class MapHandler : MonoBehaviour {
 				Debug.Log (Connection.IsConnected (fromF, field, PlayerHandler.instance.currentPlayer));
 				fromF = null;
 			}
-		} else {
+		} else 
 			chosenField = field;
-			if (BuildHandler.instance.CanBuild (field, PlayerHandler.instance.currentPlayer))
-				BuildHandler.instance.OpenBuildOptions (field);
-		}
 	}
 
 	public void FieldReleased (Field field) //mouse down on field
@@ -143,14 +149,21 @@ public class MapHandler : MonoBehaviour {
 		if (BuildHandler.instance.open)
 			BuildHandler.instance.CloseBuildOptions();
 		
-		const float MAX_TIME_FOR_CLICK = 0.2f;
-		if (timeSincePress < MAX_TIME_FOR_CLICK)
+
+		if (!longPress)
 			FieldClicked ();
 		else
 			AssaultOff ();
 		timeSincePress = 0;
 
 		BaseConquering.ConquerCheck (); //TODO értelmesebb helyre kéne rakni, így eggyel "késik"
+	}
+
+	void LongPress()
+	{
+		AssaultOff ();
+		if (BuildHandler.instance.CanBuild (chosenField, PlayerHandler.instance.currentPlayer))
+			BuildHandler.instance.OpenBuildOptions (chosenField);
 	}
 
 	public bool InMap(int x, int y)
