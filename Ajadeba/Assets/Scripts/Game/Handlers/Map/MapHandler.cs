@@ -148,15 +148,11 @@ public class MapHandler : MonoBehaviour {
 	{
 		if (BuildHandler.instance.open)
 			BuildHandler.instance.CloseBuildOptions();
-		
-
 		if (!longPress)
 			FieldClicked ();
 		else
 			AssaultOff ();
 		timeSincePress = 0;
-
-		BaseConquering.ConquerCheck (); //TODO értelmesebb helyre kéne rakni, így eggyel "késik"
 	}
 
 	void LongPress()

@@ -12,7 +12,7 @@ public class BuildOption : MonoBehaviour {
 			Disable ();
 	}
 
-	protected void Disable() //TODO roads must override for scaling
+	protected void Disable()
 	{
 		GameObject darkening = Instantiate (cantBuildPref);
 		darkening.transform.SetParent (gameObject.transform);
@@ -22,9 +22,8 @@ public class BuildOption : MonoBehaviour {
 		gameObject.GetComponent<BoxCollider2D> ().enabled = false;
 	}
 
-	protected virtual bool CanBuild (Field where) //TODO roads must override
+	protected virtual bool CanBuild (Field where)
 	{
 		return where.IsBlankForBuilding ();
 	}
-	// TODO: 
 }

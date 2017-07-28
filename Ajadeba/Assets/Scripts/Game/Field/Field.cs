@@ -116,14 +116,13 @@ public class Field : MonoBehaviour {
 		AddRuin();
 	}
 
-	public void AddStronghold (Player owner) //TODO
+	public void AddStronghold (Player owner) 
 	{
 		Stronghold stronghold = Instantiate (strongholdPref);
 		stronghold.transform.SetParent (gameObject.transform);
 		stronghold.transform.position = gameObject.transform.position;
 		stronghold.owner = owner;
 		stronghold.Inic();
-		//TODO
 	}
 
 	public void RemoveStronghold () 

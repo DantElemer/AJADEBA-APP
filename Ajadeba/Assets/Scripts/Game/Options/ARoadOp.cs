@@ -12,8 +12,10 @@ public class ARoadOp : BuildOption {
 
 	void OnMouseOver()
 	{
-		if (Input.GetMouseButtonUp (0))
+		if (Input.GetMouseButtonUp (0)) {
 			MapHandler.instance.chosenField.AddRoad (direction);
+			BaseConquering.ConquerCheck ();
+		}
 	}
 
 	protected override bool CanBuild (Field where)
