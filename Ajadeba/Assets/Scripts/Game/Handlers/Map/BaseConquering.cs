@@ -23,9 +23,21 @@ public class BaseConquering : MonoBehaviour {
 		baseField.AddStronghold (conqueror);
 	}
 
+	class Strong
+	{
+		public Field myF;
+		public Player myOwner;
+
+		public Strong (Field f, Player p)
+		{
+			myF=f;
+			myOwner=p;
+		}
+	};
+
 	public static void ConquerCheck()
 	{
-		bool newStrongCreated = false; 
+		List<Strong> newStrongs = new List<Strong> ();
 		foreach (Field[] row in MapHandler.instance.fields)
 			foreach (Field f in row)
 				if (f != null) //could use inMap as well
@@ -48,11 +60,10 @@ public class BaseConquering : MonoBehaviour {
 						}
 					}
 					if (max > 0) { //valakié mostmár lesz
-						newStrongCreated=true;
 						if (maxes.Count == 1) //the normal case...
 						{
 							Debug.Log ("a legtöbbet küldőé");//TODO kapja meg
-							Conquer (f, PlayerHandler.instance.players[maxes[0]]);
+							newStrongs.Add(new Strong(f, PlayerHandler.instance.players[maxes[0]]));
 						}
 						else { 
 							bool oneIsBuilder = false;
@@ -60,33 +71,22 @@ public class BaseConquering : MonoBehaviour {
 								if (PlayerHandler.instance.players [playerIndex] == f.myStrongholdBase.builder) { //az egyik maxos az építő
 									Debug.Log ("a legtöbbet küldő építőé"); 
 									oneIsBuilder = true;
-									Conquer (f, PlayerHandler.instance.players[maxes[playerIndex]]);
+									newStrongs.Add(new Strong(f, PlayerHandler.instance.players[maxes[playerIndex]]));
 								}
 							if (!oneIsBuilder) {
 								Debug.Log ("az aktuális játékosé");
-								Conquer (f, PlayerHandler.instance.currentPlayer);
+								newStrongs.Add(new Strong(f, PlayerHandler.instance.currentPlayer));
 							}
 						}
 							
 					}
 				}
-
-		if (newStrongCreated) {
-			DestroyBasedOnTerritory ();
+		foreach (Strong s in newStrongs) //it activates the first wave of new strongholds
+			Conquer (s.myF, s.myOwner);
+		
+		if (newStrongs.Count > 0) {
+			DestroyBasedOnTerritory (); 
 			ConquerCheck (); //láncszabály
 		}
-		
-		/// végigmenni az összes mezőn, megvizsgálni a base-ket, hogy
-		/// van-e játékos aki megkaphatja
-		/// ha igen
-		/// ha egy, az megkapja *
-		/// ha több, melyik küld a legtöbbet,
-		/// ha egyenlőség, melyik építette,
-		/// ha egyik se az aktuális kapja *
-		/// * a Base-t el kell távolítani, Strong-ot adni
-		/// beállítani az owner-ét
-		/// Inic (ezzel kap területet)
-						// tesztelni, hogy vannak-e lemészárolandó dolgok (lemészárolni őket)
-		/// újra, ha lett új strong (a lánc lehetőség miatt)
 	}
 }

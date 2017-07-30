@@ -181,14 +181,14 @@ public class Field : MonoBehaviour {
 	public bool IsBlankForBuilding() //alagútak nem számítanak
 	{
 		if (HasPart (BARRACK) || HasPart (STRONGHOLD_BASE) || HasPart (STRONGHOLD) || HasPart (VILLAGE) || HasPart (NORTH_ROAD) || HasPart (EAST_ROAD) 
-			|| HasPart (SOUTH_ROAD) || HasPart (WEST_ROAD))
+			|| HasPart (SOUTH_ROAD) || HasPart (WEST_ROAD) || HasPart (RUIN))
 			return false;
 		return true;
 	}
 
 	public bool IsFullForBuilding() //alagútak nem számítanak
 	{
-		if (HasPart (BARRACK) || HasPart (STRONGHOLD) || HasPart (STRONGHOLD_BASE) || HasPart (VILLAGE) ||
+		if (HasPart (BARRACK) || HasPart (STRONGHOLD) || HasPart (STRONGHOLD_BASE) || HasPart (VILLAGE) || HasPart (RUIN) ||
 		    HasPart (NORTH_ROAD) && HasPart (EAST_ROAD) && HasPart (SOUTH_ROAD) && HasPart (WEST_ROAD))
 			return true;
 		return false;
