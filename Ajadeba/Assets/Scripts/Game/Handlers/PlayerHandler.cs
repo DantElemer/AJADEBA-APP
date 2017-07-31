@@ -27,7 +27,7 @@ public class PlayerHandler : MonoBehaviour {
 	}
 
 
-	void Start () 
+	void Awake () 
 	{
 		CreatingPlayers ();
 		ActivatePlayer (0);
@@ -81,9 +81,11 @@ public class PlayerHandler : MonoBehaviour {
 		firstPlayer.name = "First Player";
 		firstPlayer.myName = "Domi";
 		firstPlayer.nation = "Test1";
+		firstPlayer.SetFlag ();
 		secondPlayer.name = "Second Player";
 		secondPlayer.myName = "Balázs";
 		secondPlayer.nation = "Test2";
+		secondPlayer.SetFlag ();
 
 		players [0] = firstPlayer;
 		players [1] = secondPlayer;

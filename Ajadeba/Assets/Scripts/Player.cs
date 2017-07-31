@@ -11,16 +11,16 @@ public class Player : MonoBehaviour {
 	bool alive = true;
 
 
-	void Start () 
+	/*void Start () 
 	{
 		SetFlag ();
-	}
+	}*/
 
-	void SetFlag()
+	public void SetFlag()
 	{
 		flag = Resources.Load<Sprite> ("Nations/"+nation+"/Flag");
 		if (flag == null)
-			Debug.Log ("gebasz a betöltésnél");
+			Debug.Log ("gebasz a zászló betöltésénél");
 	}
 
 	public void SetActive (bool act)

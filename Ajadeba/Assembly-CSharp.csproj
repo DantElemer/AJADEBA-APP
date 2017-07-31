@@ -53,6 +53,12 @@
      <Compile Include="Assets\Scripts\Game\Field\Stronghold.cs" />
      <Compile Include="Assets\Scripts\Game\Field\Village.cs" />
      <Compile Include="Assets\Scripts\Game\Game.cs" />
+     <Compile Include="Assets\Scripts\Game\Handlers\Character Panel\ChPFlag.cs" />
+     <Compile Include="Assets\Scripts\Game\Handlers\Character Panel\CharacterPanelHandler.cs" />
+     <Compile Include="Assets\Scripts\Game\Handlers\Character Panel\Characters\Character.cs" />
+     <Compile Include="Assets\Scripts\Game\Handlers\Character Panel\Characters\Mason.cs" />
+     <Compile Include="Assets\Scripts\Game\Handlers\Character Panel\Characters\Prolific.cs" />
+     <Compile Include="Assets\Scripts\Game\Handlers\Character Panel\Characters\Roman.cs" />
      <Compile Include="Assets\Scripts\Game\Handlers\Map\BaseConquering.cs" />
      <Compile Include="Assets\Scripts\Game\Handlers\Map\BuildHandler.cs" />
      <Compile Include="Assets\Scripts\Game\Handlers\Map\Connection.cs" />
