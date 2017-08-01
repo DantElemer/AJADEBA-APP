@@ -1,2 +1,1 @@
-Szabályzat elolvasása, ha meglesz.
-MouseEventek lecserélése Raycastolásra, vagy egyéb módon megoldani, hogy mindig megfelelően érzékelve legyenek a dolgok (problem: próbálj építeni pl a bal alsó sarokba utat).
+﻿Szólj ha ráérsz.

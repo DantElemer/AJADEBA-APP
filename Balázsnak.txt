@@ -1,4 +1,38 @@
-Szabályzat!! Elsődlegesen egy olyan, ami a teljes játékot összefoglalja (Miki és Álmos számára), aztán lehet szépen szintekre bontott.
-Tutorialok.
-Gondolkozás az egész játék kinézetén, működésén (karakterek speckó dolgai például, hogy legyenek használhatóak...), konzultálás Domival.
-Settings, DomiTime.
+﻿Általános: nyilván próbáltam szépen dolgozni, de ne vedd tökéletenek a munkám, ha úgy ítéled meg érdemes, nyugodtan csinálhatsz változtatásokat benne. Ha ezt nem is teszed, jó lenne kb tisztában lenned az eddigiekkel.
+
+Csinálj tutorialokat!
+
+
+Mellékszálak.
+
+1) [kódolás, unity; nehézség attól függ mennyire egyszerű változatot csinálsz]
+Settings. + jó lenne, ha nem csak két játékosra működne
+2) [könnyű kódolás] 
+Time cucc.
+3) [könnyű kódolás, kis utánanézés] 
+Raycast-tal lecserélni a mouse event-eket.
+4) [közepes-nehéz kódolás] 
+Romokon keresztül lehessen támadni veszteséggel. 
+5) [könnyű kódolás, kis unity] 
+Message panel.
+6) [szerkezeti döntés, nagyon könnyű kódolás] 
+Singleton-static izéke.
+
+
+Menő lenne, de nehezebb, kevésbé izolált.
+
+7) [unity, kódolás, eddigiek ismerete, mindenféle szint, de valszeg inkább nehéz]
+Karakterek, karakterpanel.
+
+
+Tervezés.
+
+8) [eddigi játékmechanika felhasználói ismerete, későbbiek alapos átgondolása]
+Karakterpanel, képességek használata!
+9) [AJADÉBA (szintek szerinti) alapos átgondolása]
+Tutorial(ok).
+10) [nem tom]
+Settings szerkezete, kinézete (több játékos, több bonyolultsági szint).
+
+
++1 ha találsz TODO-t, amit megtudsz csinálni, vagy eszedbe jut valami, ami kell és meg tudod csinálni...
