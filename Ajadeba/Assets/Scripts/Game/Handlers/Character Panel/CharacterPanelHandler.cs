@@ -37,7 +37,7 @@ public class CharacterPanelHandler : MonoBehaviour { //TODO staticolás/singleto
 
 	public void OpenChChoosers()
 	{
-		int numOfChars = 3;
+		int numOfChars = 4;
 		for (int i = 0; i < numOfChars; i++) //hát nem gyönyönrű?
 		{
 			CharacterChooser newChooser = Instantiate (ChChooserPref);
@@ -51,6 +51,8 @@ public class CharacterPanelHandler : MonoBehaviour { //TODO staticolás/singleto
 				newChooser.Inic (new Prolific ());
 			else if (i==2)
 				newChooser.Inic (new Roman ());
+			else if (i==3)
+				newChooser.Inic (new Gyongyi ());
 		}
 	}
 

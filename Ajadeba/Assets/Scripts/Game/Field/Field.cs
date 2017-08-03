@@ -122,6 +122,8 @@ public class Field : MonoBehaviour {
 		stronghold.transform.SetParent (gameObject.transform);
 		stronghold.transform.position = gameObject.transform.position;
 		stronghold.owner = owner;
+		if (owner.mainStrong == null)
+			owner.mainStrong = stronghold;
 		stronghold.Inic();
 	}
 

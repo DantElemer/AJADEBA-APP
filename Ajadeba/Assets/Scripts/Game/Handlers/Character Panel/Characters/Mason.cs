@@ -9,8 +9,8 @@ public class Mason : Character //Kőműves
 		name = MASON;
 	}
 
-	public override void Activated()
+	/*public override void Activated()
 	{
 		Debug.Log ("For the masons!");
-	}
+	}*/
 }

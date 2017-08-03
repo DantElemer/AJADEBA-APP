@@ -9,9 +9,10 @@ public class Character {
 	public const string MASON = "Mason";
 	public const string PROLIFIC = "Prolific";
 	public const string ROMAN = "Roman";
+	public const string GYONGYI = "Gyöngyi";
 
-	public virtual void Activated()
+	/*public virtual void Activated()
 	{
 		Debug.Log ("I'm chosen!");
-	}
+	}*/
 }

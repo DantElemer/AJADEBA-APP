@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public class Player : MonoBehaviour {
 
+	public Stronghold mainStrong; //the player's first stronghold (set in Field/AddStronghold)
 	public string myName;
 	public string nation;
 	public Sprite flag;
@@ -48,6 +49,8 @@ public class Player : MonoBehaviour {
 	{
 		myChars.Add(newCh);
 		Debug.Log (newCh.name + " added to " + myName);
+		if (newCh is Gyongyi)
+			mainStrong.myField.AddVillage ();
 		/*Mason m = newCh as Mason;
 		if (m != null)
 			m.Activated ();*/
