@@ -5,10 +5,12 @@ public class ChPFlag : MonoBehaviour {
 
 	public Player player;
 
-	void OnMouseDown()
+	void OnMouseUp()
 	{
-		if (PlayerHandler.instance.currentPlayer==player)
+		if (PlayerHandler.instance.currentPlayer == player) {
 			Debug.Log ("It's your flag " + player.myName + ".");
+			gameObject.GetComponentInParent<CharacterPanelHandler> ().OpenChChoosers ();
+		}
 		else
 			Debug.Log (player.myName + "'s flag.");
 	}

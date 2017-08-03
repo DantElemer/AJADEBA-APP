@@ -1,10 +1,25 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
-public class CharacterPanelHandler : MonoBehaviour {
+public class CharacterPanelHandler : MonoBehaviour { //TODO staticolás/singletoná varázsolás? 2v2-nél, hogy legyen? Lehet kettő lesz belőle?
 
 	public SpriteRenderer firstFlag;
 	public SpriteRenderer secondFlag;
+	public CharacterChooser ChChooserPref;
+	List<CharacterChooser> chChoosers = new List<CharacterChooser>();
+
+	//turn markers' data:
+	public SpriteRenderer TurnMarkerPref;
+	Vector3 upperStartPoint=new Vector3(0.17f, -0.06f, 0f);
+	Vector3 bottomStartPoint=new Vector3(0.17f, -0.22f, 0f);
+	int turnsFinished=0; //each players' turn counts, not "whole turns"
+
+
+
+
+
+
 
 	// Use this for initialization
 	void Start () 
@@ -18,13 +33,44 @@ public class CharacterPanelHandler : MonoBehaviour {
 			flag.player = PlayerHandler.instance.players [i];
 			i++;
 		}
-		PlayerHandler.instance.currentPlayer.AddCharacter ("Mason");
-		//(PlayerHandler.instance.currentPlayer.myChars [0] as Mason).activated();
-			
+	}
+
+	public void OpenChChoosers()
+	{
+		int numOfChars = 3;
+		for (int i = 0; i < numOfChars; i++) //hát nem gyönyönrű?
+		{
+			CharacterChooser newChooser = Instantiate (ChChooserPref);
+			newChooser.gameObject.transform.SetParent (gameObject.transform);
+			chChoosers.Add (newChooser);
+			newChooser.transform.position = newChooser.transform.position + (new Vector3 (0, (i - (float)(numOfChars-1) / 2f), 0));
+
+			if (i==0)
+				newChooser.Inic (new Mason ());
+			else if (i==1)
+				newChooser.Inic (new Prolific ());
+			else if (i==2)
+				newChooser.Inic (new Roman ());
+		}
+	}
+
+	public void CloseChChoosers()
+	{
+		foreach (CharacterChooser chCh in chChoosers)
+			Destroy (chCh.gameObject);
+		chChoosers.Clear ();
 	}
 	
-	// Update is called once per frame
-	void Update () {
-	
+	public void TurnFinished()
+	{
+		SpriteRenderer tMarker=Instantiate (TurnMarkerPref);
+		tMarker.gameObject.transform.SetParent (gameObject.transform);
+		tMarker.gameObject.transform.position = gameObject.transform.position;
+		float markerDist = tMarker.bounds.size.x + 0.01f;
+		if (turnsFinished % 2 == 0 ) //upper player
+			tMarker.gameObject.transform.position += upperStartPoint + (new Vector3 (turnsFinished / 2 * markerDist, 0, 0));
+		else //bottom player
+			tMarker.gameObject.transform.position += bottomStartPoint + (new Vector3 (turnsFinished / 2 * markerDist, 0, 0));
+		turnsFinished++;
 	}
 }

@@ -4,8 +4,9 @@ using System.Collections;
 public class Roman : Character 
 {
 
-	void Awake()
+	public Roman()
 	{
 		cost = 5;
+		name=ROMAN;
 	}
 }

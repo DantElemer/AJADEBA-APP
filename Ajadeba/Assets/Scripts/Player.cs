@@ -11,13 +11,8 @@ public class Player : MonoBehaviour {
 	bool active = false;
 	bool alive = true;
 
-	//public List<Character> myChars = new List<Character> (); //it's only public to see it in the editor!
+	List<Character> myChars = new List<Character> (); //watch out, you need casting for specified stuff!
 
-
-	/*void Start () 
-	{
-		SetFlag ();
-	}*/
 
 	public void SetFlag()
 	{
@@ -43,15 +38,19 @@ public class Player : MonoBehaviour {
 
 	public bool HasChar(string character)
 	{
-		return false; //TODO ...
+		foreach (Character c in myChars)
+			if (c.name == character)
+				return true;
+		return false;
 	}
 
-	public void AddCharacter(string newCh)
+	public void AddCharacter(Character newCh)
 	{
-		if (newCh == Character.Mason)
-			gameObject.AddComponent<Mason> ();
-		else
-			Debug.Log ("Nincs ilyen karakter!");
+		myChars.Add(newCh);
+		Debug.Log (newCh.name + " added to " + myName);
+		/*Mason m = newCh as Mason;
+		if (m != null)
+			m.Activated ();*/
 	}
 
 }

@@ -11,6 +11,7 @@ public class PlayerHandler : MonoBehaviour {
 	public Player playerPref;
 	public Player[] players;
 	public Player currentPlayer;
+	public CharacterPanelHandler chPanel;
 	int currPlayer;
 
 
@@ -43,6 +44,7 @@ public class PlayerHandler : MonoBehaviour {
 	{
 		DeactivatePlayer ();
 		ActivatePlayer (FindNextAlive (currPlayer));
+		chPanel.TurnFinished (); //TODO nem ide tenni, hanem mindkettőt valamilyen központból hívni?
 		SceneManager.LoadScene ("NewTurn", LoadSceneMode.Additive);
 	}
 

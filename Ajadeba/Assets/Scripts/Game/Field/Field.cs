@@ -157,6 +157,7 @@ public class Field : MonoBehaviour {
 		newTer.name = "Territory (" + owner.myName + ")";
 		SpriteRenderer terSR = newTer.GetComponent<SpriteRenderer> ();
 		terSR.sprite = Resources.Load<Sprite> ("Nations/" + owner.nation + "/TerritoryPattern");
+		terSR.sortingOrder = 5;
 		owners.Add (owner);
 		if (HasPart (BARRACK))
 			myBarrack.isLazy = true; // if a barrack becomes defended, it becomes lazy

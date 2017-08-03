@@ -3,14 +3,14 @@ using System.Collections;
 
 public class Mason : Character //Kőműves
 {
-	void Awake()
+	public Mason()
 	{
 		cost = 3;
-		Debug.Log (cost);
+		name = MASON;
 	}
 
-	public void activated()
+	public override void Activated()
 	{
-		Debug.Log ("For the mansons!");
+		Debug.Log ("For the masons!");
 	}
 }

@@ -54,6 +54,7 @@
      <Compile Include="Assets\Scripts\Game\Field\Village.cs" />
      <Compile Include="Assets\Scripts\Game\Game.cs" />
      <Compile Include="Assets\Scripts\Game\Handlers\Character Panel\ChPFlag.cs" />
+     <Compile Include="Assets\Scripts\Game\Handlers\Character Panel\CharacterChooser.cs" />
      <Compile Include="Assets\Scripts\Game\Handlers\Character Panel\CharacterPanelHandler.cs" />
      <Compile Include="Assets\Scripts\Game\Handlers\Character Panel\Characters\Character.cs" />
      <Compile Include="Assets\Scripts\Game\Handlers\Character Panel\Characters\Mason.cs" />

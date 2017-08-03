@@ -3,8 +3,9 @@ using System.Collections;
 
 public class Prolific : Character //Szapora
 {
-	void Awake()
+	public Prolific()
 	{
 		cost = 5;
+		name=PROLIFIC;
 	}
 }
