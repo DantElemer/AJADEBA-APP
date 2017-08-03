@@ -18,6 +18,8 @@ public class CharacterPanelHandler : MonoBehaviour {
 			flag.player = PlayerHandler.instance.players [i];
 			i++;
 		}
+		PlayerHandler.instance.currentPlayer.AddCharacter ("Mason");
+		//(PlayerHandler.instance.currentPlayer.myChars [0] as Mason).activated();
 			
 	}
 	

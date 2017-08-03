@@ -17,6 +17,8 @@ Romokon keresztül lehessen támadni veszteséggel.
 Message panel.
 6) [szerkezeti döntés, nagyon könnyű kódolás] 
 Singleton-static izéke.
+7) [könnyű kódolás, utánanézés]
+Pályagenerálás fájlból (a beadandómnak megfelelő formátumúból).
 
 
 Menő lenne, de nehezebb, kevésbé izolált.
