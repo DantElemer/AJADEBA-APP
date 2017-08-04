@@ -53,12 +53,19 @@ public class Player : MonoBehaviour {
 		return false;
 	}
 
+	public Character MyChar(string which)
+	{
+		foreach (Character c in myChars)
+			if (c.name == which)
+				return c;
+		return null; //doesn't have such character
+	}
 	public int CharLevel (string character)
 	{
 		foreach (Character c in myChars)
 			if (c.name == character)
 				return c.level;
-		return 0;
+		return 0; //if player doesn't have the character
 	}
 
 	public void AddCharacter(Character newCh)
@@ -77,8 +84,15 @@ public class Player : MonoBehaviour {
 
 	public void FinishedBuilding()
 	{
-		PlayerHandler.instance.NextPlayer ();
-		//TODO do turn-end actions (Rudi, BJB...)
+		if (HasChar (Character.STAKHANOVITE))
+			if (MyChar (Character.STAKHANOVITE).hasTurnEndBoost) {
+				stepsLeft++;
+				MyChar (Character.STAKHANOVITE).hasTurnEndBoost = false;
+			}
+			else
+				PlayerHandler.instance.NextPlayer ();
+		else
+			PlayerHandler.instance.NextPlayer ();
 	}
 
 }

@@ -5,6 +5,7 @@ public class Character {
 
 	public int cost = 0; //number of turns you have to wait until choosing an other if you choose this one
 	public int level = 1;
+	public bool hasTurnEndBoost = false; //(still) has it...
 	int turnsSpent = 0;
 	protected int evolveTime = 5;
 	public string name = "Anonymus";
@@ -15,6 +16,7 @@ public class Character {
 	public const string ROMAN = "Római";
 	public const string GYONGYI = "Gyöngyi";
 	public const string TRESPASSER = "Birtokháborító";
+	public const string STAKHANOVITE = "Sztahanovista";
 
 	public virtual void AddedToPlayer(Player toWhom)
 	{
@@ -27,7 +29,7 @@ public class Character {
 		level++;
 	}
 
-	public void TurnPassed ()
+	public virtual void TurnPassed ()
 	{
 		turnsSpent++;
 		if (turnsSpent % evolveTime == 0)
