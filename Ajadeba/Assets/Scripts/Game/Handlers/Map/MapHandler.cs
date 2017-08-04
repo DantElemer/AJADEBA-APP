@@ -119,8 +119,7 @@ public class MapHandler : MonoBehaviour {
 		if (assaultBase != null) {
 			assaultBase.myStronghold.transform.Find ("AssaultOn").gameObject.SetActive (false);
 			assaultBase = null;
-		} else
-			Debug.Log ("Nincs is assault!");
+		} 
 	}
 
 	void FieldClicked()
@@ -133,12 +132,16 @@ public class MapHandler : MonoBehaviour {
 			if (Connection.CanGo (assaultBase.myStronghold, chosenField.myStronghold)) { // and attacker reaches defender
 					chosenField.RemoveStronghold ();
 					KillUndefendedLazies ();
+					PlayerHandler.instance.NextPlayer ();
 				}
 				AssaultOff ();
 			} else if (chosenField.HasPart (Field.STRONGHOLD)) { // no stronghold chosen yet, clicked field has stronghold
-				Debug.Log ("Attack: " + chosenField.myStronghold.attStrength);
 				if (chosenField.myStronghold.owner == PlayerHandler.instance.currentPlayer)
+				if (PlayerHandler.instance.currentPlayer.stepsLeft == PlayerHandler.instance.currentPlayer.maxSteps) {
 					AssaultOn ();
+					Debug.Log ("Attack: " + chosenField.myStronghold.attStrength);
+				} else
+					Debug.Log ("Assault takes a full turn!");
 			}	
 		} else {
 			if (prolificChoosing)
@@ -206,7 +209,10 @@ public class MapHandler : MonoBehaviour {
 
 	public void SetStatus (string to)
 	{
-		status = to;
+		if (to != status) {
+			status = to;
+			Debug.Log ("[MapHandler] Switched to " + status);
+		}
 	}
 
 	public void Prolification()
@@ -215,3 +221,7 @@ public class MapHandler : MonoBehaviour {
 		prolificChoosing = true; //TODO kiemelni a falvakat
 	}
 }
+
+
+
+// NEXT: building - not to eternity, godmode, then Roman

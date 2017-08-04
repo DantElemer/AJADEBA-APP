@@ -9,6 +9,10 @@ public class Player : MonoBehaviour {
 	public string nation;
 	public Sprite flag;
 
+	public int maxSteps = 4;
+	public int stepsLeft; 
+	public int roadBoost;
+
 	bool active = false;
 	bool alive = true;
 
@@ -25,6 +29,10 @@ public class Player : MonoBehaviour {
 	public void SetActive (bool act)
 	{
 		active = act;
+		if (active) { //activated => new turn => new steps! :)
+			stepsLeft = maxSteps;
+			roadBoost = 0;
+		}
 	}
 
 	public bool IsActive ()
@@ -58,12 +66,19 @@ public class Player : MonoBehaviour {
 		myChars.Add(newCh);
 		newCh.AddedToPlayer (this);
 		Debug.Log (newCh.name + " added to " + myName);
+		PlayerHandler.instance.NextPlayer ();
 	}
 
 	public void TurnFinished()
 	{
 		foreach (Character c in myChars)
 			c.TurnPassed ();
+	}
+
+	public void FinishedBuilding()
+	{
+		PlayerHandler.instance.NextPlayer ();
+		//TODO do turn-end actions (Rudi, BJB...)
 	}
 
 }

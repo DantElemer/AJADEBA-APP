@@ -40,7 +40,7 @@ public class PlayerHandler : MonoBehaviour {
 			NextPlayer ();
 	}
 	
-	void NextPlayer()
+	public void NextPlayer()
 	{
 		currentPlayer.TurnFinished ();
 		DeactivatePlayer ();

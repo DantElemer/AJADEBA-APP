@@ -10,6 +10,7 @@ public class NewTurn : MonoBehaviour {
 	// Use this for initialization
 	void Start () 
 	{
+		MapHandler.instance.SetStatus(MapHandler.FROZEN_STATE);
 		txtNewTurn.text=PlayerHandler.instance.currentPlayer.myName+" köre!";
 	}
 	
@@ -20,6 +21,7 @@ public class NewTurn : MonoBehaviour {
 
 	public void ResumeGame()
 	{
+		MapHandler.instance.SetStatus(MapHandler.NORMAL_STATE);
 		SceneManager.UnloadScene ("NewTurn");
 	}
 }

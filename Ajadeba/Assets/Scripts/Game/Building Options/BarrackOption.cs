@@ -10,12 +10,10 @@ public class BarrackOption : BuildOption {
 		SpriteRenderer flagSR = flag.GetComponent<SpriteRenderer> ();
 		flagSR.sprite = PlayerHandler.instance.currentPlayer.flag;
 	}
-	
-	void OnMouseOver()
+
+	protected override void BuildIt ()
 	{
-		if (Input.GetMouseButtonUp (0)) {
-			MapHandler.instance.chosenField.AddBarrack (PlayerHandler.instance.currentPlayer);
-			BaseConquering.ConquerCheck ();
-		}
+		MapHandler.instance.chosenField.AddBarrack (PlayerHandler.instance.currentPlayer);
+		base.BuildIt ();
 	}
 }

@@ -45,6 +45,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\Game\Building Options\ARoadOp.cs" />
+     <Compile Include="Assets\Scripts\Game\Building Options\BarrackOption.cs" />
+     <Compile Include="Assets\Scripts\Game\Building Options\BuildOption.cs" />
+     <Compile Include="Assets\Scripts\Game\Building Options\CantBuild.cs" />
+     <Compile Include="Assets\Scripts\Game\Building Options\RoadOption.cs" />
+     <Compile Include="Assets\Scripts\Game\Building Options\StrongBaseOp.cs" />
      <Compile Include="Assets\Scripts\Game\Field\Barrack.cs" />
      <Compile Include="Assets\Scripts\Game\Field\Field.cs" />
      <Compile Include="Assets\Scripts\Game\Field\FieldPart.cs" />
@@ -68,15 +74,9 @@
      <Compile Include="Assets\Scripts\Game\Handlers\MessageHandler.cs" />
      <Compile Include="Assets\Scripts\Game\Handlers\PlayerHandler.cs" />
      <Compile Include="Assets\Scripts\Game\Handlers\TimeHandler.cs" />
-     <Compile Include="Assets\Scripts\Game\Options\ARoadOp.cs" />
-     <Compile Include="Assets\Scripts\Game\Options\BarrackOption.cs" />
-     <Compile Include="Assets\Scripts\Game\Options\BuildOption.cs" />
-     <Compile Include="Assets\Scripts\Game\Options\CantBuild.cs" />
-     <Compile Include="Assets\Scripts\Game\Options\RoadOption.cs" />
-     <Compile Include="Assets\Scripts\Game\Options\StrongBaseOp.cs" />
+     <Compile Include="Assets\Scripts\Game\NewTurn.cs" />
+     <Compile Include="Assets\Scripts\Game\Player.cs" />
      <Compile Include="Assets\Scripts\MainMenu.cs" />
-     <Compile Include="Assets\Scripts\NewTurn.cs" />
-     <Compile Include="Assets\Scripts\Player.cs" />
      <Compile Include="Assets\Scripts\Settings.cs" />
      <Compile Include="Assets\Scripts\Tutorial.cs" />
  <Reference Include="UnityEngine.UI">

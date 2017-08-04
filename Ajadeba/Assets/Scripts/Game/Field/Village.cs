@@ -14,5 +14,6 @@ public class Village : FieldPart {
 	public void Prolificate()
 	{
 		myCapacity *= 2;
+		Debug.Log ("I've been prolified!!!");
 	}
 }
