@@ -20,6 +20,8 @@ public class MapHandler : MonoBehaviour {
 	const float MAX_TIME_FOR_CLICK = 0.2f;
 	bool longPress=false;
 
+	public bool frozen = false;
+
 
 	public static MapHandler instance //singleton magic
 	{
@@ -40,6 +42,9 @@ public class MapHandler : MonoBehaviour {
 
 	void Update()
 	{
+		if (frozen)
+			return;
+		
 		if (!Input.GetMouseButton (0)) { //left button is not pressed
 			chosenField = null;
 			longPress = false;
@@ -124,8 +129,9 @@ public class MapHandler : MonoBehaviour {
 			}
 			AssaultOff ();
 		}
-		else if (chosenField.HasPart (Field.STRONGHOLD)) 
+		else if (chosenField.HasPart (Field.STRONGHOLD)) // no stronghold chosen yet, clicked field has stronghold
 		{
+			Debug.Log ("Attack: " + chosenField.myStronghold.attStrength);
 			if (chosenField.myStronghold.owner == PlayerHandler.instance.currentPlayer)
 				AssaultOn ();
 		}			
@@ -133,6 +139,9 @@ public class MapHandler : MonoBehaviour {
 
 	public void FieldPressed (Field field) //mouse down on field
 	{
+		if (frozen)
+			return;
+		
 		if (checkMode) {
 			if (fromF == null)
 				fromF = field;
@@ -144,8 +153,11 @@ public class MapHandler : MonoBehaviour {
 			chosenField = field;
 	}
 
-	public void FieldReleased (Field field) //mouse down on field
+	public void FieldReleased (Field field) 
 	{
+		if (frozen)
+			return;
+		
 		if (BuildHandler.instance.open)
 			BuildHandler.instance.CloseBuildOptions();
 		if (!longPress)

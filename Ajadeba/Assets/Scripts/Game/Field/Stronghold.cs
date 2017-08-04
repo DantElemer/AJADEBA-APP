@@ -64,7 +64,7 @@ public class Stronghold : FieldPart {
 	{
 		get
 		{
-			return strength;
+			return strength + owner.CharLevel(Character.MASON);
 		}
 	}
 

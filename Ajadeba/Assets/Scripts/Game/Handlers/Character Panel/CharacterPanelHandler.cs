@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class CharacterPanelHandler : MonoBehaviour { //TODO staticolás/singletoná varázsolás? 2v2-nél, hogy legyen? Lehet kettő lesz belőle?
 
@@ -8,6 +9,7 @@ public class CharacterPanelHandler : MonoBehaviour { //TODO staticolás/singleto
 	public SpriteRenderer secondFlag;
 	public CharacterChooser ChChooserPref;
 	List<CharacterChooser> chChoosers = new List<CharacterChooser>();
+	bool mouseDownWhenOpen = false; //it's true if chChoosers are shown and mouse is pressed
 
 	//turn markers' data:
 	public SpriteRenderer TurnMarkerPref;
@@ -35,8 +37,26 @@ public class CharacterPanelHandler : MonoBehaviour { //TODO staticolás/singleto
 		}
 	}
 
+	void Update()
+	{
+		if (Input.GetMouseButton (0) && chChoosers.Count > 0)
+			mouseDownWhenOpen = true;
+		else if (mouseDownWhenOpen && !Input.GetMouseButton (0)) {
+			CloseChChoosers ();
+			mouseDownWhenOpen = false;
+		}
+	}
+
+	/*public void ClickedElsewhere()
+	{
+		CloseChChoosers ();
+	}*/
+
 	public void OpenChChoosers()
 	{
+		MapHandler.instance.frozen = true;
+		//gameObject.transform.FindChild ("ClickElsewhereBtn").gameObject.SetActive (true);
+
 		int numOfChars = 4;
 		for (int i = 0; i < numOfChars; i++) //hát nem gyönyönrű?
 		{
@@ -45,19 +65,25 @@ public class CharacterPanelHandler : MonoBehaviour { //TODO staticolás/singleto
 			chChoosers.Add (newChooser);
 			newChooser.transform.position = newChooser.transform.position + (new Vector3 (0, (i - (float)(numOfChars-1) / 2f), 0));
 
-			if (i==0)
+			if (i == 0) 
 				newChooser.Inic (new Mason ());
-			else if (i==1)
+			else if (i==1) 
 				newChooser.Inic (new Prolific ());
-			else if (i==2)
+			else if (i==2) 
 				newChooser.Inic (new Roman ());
-			else if (i==3)
+			else if (i==3) 
 				newChooser.Inic (new Gyongyi ());
+
+			if (PlayerHandler.instance.currentPlayer.HasChar (newChooser.myChar.name))
+				newChooser.gameObject.GetComponentInChildren<Button> ().interactable = false;
 		}
 	}
 
 	public void CloseChChoosers()
 	{
+		MapHandler.instance.frozen = false;
+		//gameObject.transform.FindChild ("ClickElsewhereBtn").gameObject.SetActive (false);
+
 		foreach (CharacterChooser chCh in chChoosers)
 			Destroy (chCh.gameObject);
 		chChoosers.Clear ();

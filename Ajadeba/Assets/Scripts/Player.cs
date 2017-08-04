@@ -45,15 +45,25 @@ public class Player : MonoBehaviour {
 		return false;
 	}
 
+	public int CharLevel (string character)
+	{
+		foreach (Character c in myChars)
+			if (c.name == character)
+				return c.level;
+		return 0;
+	}
+
 	public void AddCharacter(Character newCh)
 	{
 		myChars.Add(newCh);
+		newCh.AddedToPlayer (this);
 		Debug.Log (newCh.name + " added to " + myName);
-		if (newCh is Gyongyi)
-			mainStrong.myField.AddVillage ();
-		/*Mason m = newCh as Mason;
-		if (m != null)
-			m.Activated ();*/
+	}
+
+	public void TurnFinished()
+	{
+		foreach (Character c in myChars)
+			c.TurnPassed ();
 	}
 
 }

@@ -42,6 +42,7 @@ public class PlayerHandler : MonoBehaviour {
 	
 	void NextPlayer()
 	{
+		currentPlayer.TurnFinished ();
 		DeactivatePlayer ();
 		ActivatePlayer (FindNextAlive (currPlayer));
 		chPanel.TurnFinished (); //TODO nem ide tenni, hanem mindkettőt valamilyen központból hívni?
