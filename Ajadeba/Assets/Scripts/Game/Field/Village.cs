@@ -10,4 +10,9 @@ public class Village : FieldPart {
 			return myCapacity;
 		}
 	}
+
+	public void Prolificate()
+	{
+		myCapacity *= 2;
+	}
 }

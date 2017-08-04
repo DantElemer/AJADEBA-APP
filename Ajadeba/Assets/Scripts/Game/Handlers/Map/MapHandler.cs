@@ -20,7 +20,15 @@ public class MapHandler : MonoBehaviour {
 	const float MAX_TIME_FOR_CLICK = 0.2f;
 	bool longPress=false;
 
-	public bool frozen = false;
+
+	//status
+	public const string NORMAL_STATE = "normal state"; 
+	public const string CHOOSER_STATE = "chooser state";
+	public const string FROZEN_STATE = "frozen state"; //not interactable
+	string status = NORMAL_STATE;
+	public string pStatus {get {return status;}}
+		//chooser state
+	bool prolificChoosing=false; //currently searching for a village to prolify
 
 
 	public static MapHandler instance //singleton magic
@@ -42,14 +50,14 @@ public class MapHandler : MonoBehaviour {
 
 	void Update()
 	{
-		if (frozen)
+		if (status==FROZEN_STATE)
 			return;
 		
 		if (!Input.GetMouseButton (0)) { //left button is not pressed
 			chosenField = null;
 			longPress = false;
 		}
-		if (chosenField != null) 
+		if (chosenField != null) //so mouse is pressed
 		{
 			timeSincePress += Time.deltaTime;
 			if (timeSincePress > MAX_TIME_FOR_CLICK && !longPress) {
@@ -117,29 +125,35 @@ public class MapHandler : MonoBehaviour {
 
 	void FieldClicked()
 	{
-		if (assaultBase != null) // one stronghold is chosen
-		{
-			if (chosenField.HasPart (Field.STRONGHOLD))  // and the field clicked also has a stronghold
+		if (status != CHOOSER_STATE) {
+			if (assaultBase != null) { // one stronghold is chosen
+				if (chosenField.HasPart (Field.STRONGHOLD))  // and the field clicked also has a stronghold
 			if (PlayerHandler.instance.areEnemies (assaultBase.myStronghold.owner, chosenField.myStronghold.owner)) // and they are enemies
 			if (assaultBase.myStronghold.attStrength > chosenField.myStronghold.defStrength) // and attacker is stronger
-			if (Connection.CanGo (assaultBase.myStronghold, chosenField.myStronghold)) // and attacker reaches defender
-			{
-				chosenField.RemoveStronghold ();
-				KillUndefendedLazies ();
-			}
-			AssaultOff ();
+			if (Connection.CanGo (assaultBase.myStronghold, chosenField.myStronghold)) { // and attacker reaches defender
+					chosenField.RemoveStronghold ();
+					KillUndefendedLazies ();
+				}
+				AssaultOff ();
+			} else if (chosenField.HasPart (Field.STRONGHOLD)) { // no stronghold chosen yet, clicked field has stronghold
+				Debug.Log ("Attack: " + chosenField.myStronghold.attStrength);
+				if (chosenField.myStronghold.owner == PlayerHandler.instance.currentPlayer)
+					AssaultOn ();
+			}	
+		} else {
+			if (prolificChoosing)
+			if (chosenField.HasPart (Field.VILLAGE)) {
+				chosenField.myVillage.Prolificate ();
+				prolificChoosing = false;
+				SetStatus (NORMAL_STATE);
+			} else
+				Debug.Log ("Idiot, it's not a village!");
 		}
-		else if (chosenField.HasPart (Field.STRONGHOLD)) // no stronghold chosen yet, clicked field has stronghold
-		{
-			Debug.Log ("Attack: " + chosenField.myStronghold.attStrength);
-			if (chosenField.myStronghold.owner == PlayerHandler.instance.currentPlayer)
-				AssaultOn ();
-		}			
 	}
 
 	public void FieldPressed (Field field) //mouse down on field
 	{
-		if (frozen)
+		if (status==FROZEN_STATE)
 			return;
 		
 		if (checkMode) {
@@ -155,7 +169,7 @@ public class MapHandler : MonoBehaviour {
 
 	public void FieldReleased (Field field) 
 	{
-		if (frozen)
+		if (status==FROZEN_STATE)
 			return;
 		
 		if (BuildHandler.instance.open)
@@ -169,9 +183,12 @@ public class MapHandler : MonoBehaviour {
 
 	void LongPress()
 	{
-		AssaultOff ();
-		if (BuildHandler.instance.CanBuild (chosenField, PlayerHandler.instance.currentPlayer))
-			BuildHandler.instance.OpenBuildOptions (chosenField);
+		if (status != CHOOSER_STATE) 
+		{
+			AssaultOff ();
+			if (BuildHandler.instance.CanBuild (chosenField, PlayerHandler.instance.currentPlayer))
+				BuildHandler.instance.OpenBuildOptions (chosenField);
+		}
 	}
 
 	public bool InMap(int x, int y)
@@ -185,5 +202,16 @@ public class MapHandler : MonoBehaviour {
 		if (fields [x] [y] == null)
 			return false;
 		return true;
+	}
+
+	public void SetStatus (string to)
+	{
+		status = to;
+	}
+
+	public void Prolification()
+	{
+		SetStatus (CHOOSER_STATE);
+		prolificChoosing = true; //TODO kiemelni a falvakat
 	}
 }

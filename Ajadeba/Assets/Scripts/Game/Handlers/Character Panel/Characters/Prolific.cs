@@ -8,4 +8,9 @@ public class Prolific : Character //Szapora
 		cost = 5;
 		name=PROLIFIC;
 	}
+
+	public override void AddedToPlayer (Player toWhom)
+	{
+		MapHandler.instance.Prolification ();
+	}
 }

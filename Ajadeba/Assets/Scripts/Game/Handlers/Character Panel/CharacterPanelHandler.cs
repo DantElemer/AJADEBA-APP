@@ -54,7 +54,7 @@ public class CharacterPanelHandler : MonoBehaviour { //TODO staticolás/singleto
 
 	public void OpenChChoosers()
 	{
-		MapHandler.instance.frozen = true;
+		MapHandler.instance.SetStatus(MapHandler.FROZEN_STATE);
 		//gameObject.transform.FindChild ("ClickElsewhereBtn").gameObject.SetActive (true);
 
 		int numOfChars = 4;
@@ -81,7 +81,8 @@ public class CharacterPanelHandler : MonoBehaviour { //TODO staticolás/singleto
 
 	public void CloseChChoosers()
 	{
-		MapHandler.instance.frozen = false;
+		if (MapHandler.instance.pStatus == MapHandler.FROZEN_STATE)
+		MapHandler.instance.SetStatus (MapHandler.NORMAL_STATE);
 		//gameObject.transform.FindChild ("ClickElsewhereBtn").gameObject.SetActive (false);
 
 		foreach (CharacterChooser chCh in chChoosers)
