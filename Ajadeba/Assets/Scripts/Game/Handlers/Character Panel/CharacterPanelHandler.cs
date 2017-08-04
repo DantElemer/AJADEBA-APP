@@ -57,7 +57,7 @@ public class CharacterPanelHandler : MonoBehaviour { //TODO staticolás/singleto
 		MapHandler.instance.SetStatus(MapHandler.FROZEN_STATE);
 		//gameObject.transform.FindChild ("ClickElsewhereBtn").gameObject.SetActive (true);
 
-		int numOfChars = 4;
+		int numOfChars = 5;
 		for (int i = 0; i < numOfChars; i++) //hát nem gyönyönrű?
 		{
 			CharacterChooser newChooser = Instantiate (ChChooserPref);
@@ -73,6 +73,8 @@ public class CharacterPanelHandler : MonoBehaviour { //TODO staticolás/singleto
 				newChooser.Inic (new Roman ());
 			else if (i==3) 
 				newChooser.Inic (new Gyongyi ());
+			else if (i==4) 
+				newChooser.Inic (new Trespasser ());
 
 			if (PlayerHandler.instance.currentPlayer.HasChar (newChooser.myChar.name))
 				newChooser.gameObject.GetComponentInChildren<Button> ().interactable = false;

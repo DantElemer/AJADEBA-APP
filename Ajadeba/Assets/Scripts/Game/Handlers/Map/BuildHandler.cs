@@ -54,7 +54,8 @@ public class BuildHandler : MonoBehaviour {
 			Debug.Log ("You cannot build there, it's full!");
 			return false;
 		}
-		if (field.HasOtherOwner (who)) 
+		if (field.HasOtherOwner (who)
+			&& !(field.IsOwner(who) && who.HasChar(Character.TRESPASSER))) //birtokháborító azér bejuthat...
 		{
 			Debug.Log ("You cannot build there, it's not your territory territory!");
 			return false;

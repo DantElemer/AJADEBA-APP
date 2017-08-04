@@ -221,7 +221,3 @@ public class MapHandler : MonoBehaviour {
 		prolificChoosing = true; //TODO kiemelni a falvakat
 	}
 }
-
-
-
-// NEXT: building - not to eternity, godmode, then Roman

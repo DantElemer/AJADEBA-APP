@@ -10,10 +10,11 @@ public class Character {
 	public string name = "Anonymus";
 	protected Player myPlayer;
 
-	public const string MASON = "Mason";
-	public const string PROLIFIC = "Prolific";
-	public const string ROMAN = "Roman";
+	public const string MASON = "Kőműves";
+	public const string PROLIFIC = "Szapora";
+	public const string ROMAN = "Római";
 	public const string GYONGYI = "Gyöngyi";
+	public const string TRESPASSER = "Birtokháborító";
 
 	public virtual void AddedToPlayer(Player toWhom)
 	{
