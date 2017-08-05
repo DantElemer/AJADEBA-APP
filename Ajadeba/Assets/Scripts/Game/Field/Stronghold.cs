@@ -27,16 +27,28 @@ public class Stronghold : FieldPart {
 			for (int j = myField.yCoord - 3; j <= myField.yCoord + 3; j++)
 				if (MapHandler.instance.InMap (i, j))
 				if (Math.Abs (myField.xCoord - i) + Math.Abs (myField.yCoord - j) <= 3 && Math.Abs (myField.xCoord - i) + Math.Abs (myField.yCoord - j) != 0) 
-					{
-						MapHandler.instance.fields [i] [j].AddOwner (owner);
-						territory.Add (MapHandler.instance.fields [i] [j]);
-					}
+						AddTerritoryBit (MapHandler.instance.fields [i] [j]);
 	}
 
 	void RemoveTerritory()
 	{
 		foreach (Field f in territory)
 			f.RemoveOwner (owner);
+		territory.Clear ();
+	}
+
+	public void RemoveTerritoryBit (Field bit)
+	{
+		foreach (Field f in territory)
+			if (f == bit)
+				f.RemoveOwner (owner);
+		territory.Remove (bit);
+	}
+
+	public void AddTerritoryBit (Field bit)
+	{
+		bit.AddOwner (owner);
+		territory.Add (bit);
 	}
 
 	public void Die()

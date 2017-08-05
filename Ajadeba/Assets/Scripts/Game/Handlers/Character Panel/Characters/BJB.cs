@@ -10,6 +10,7 @@ public class BJB : Character {
 	const string CHOOSING_AIM = "choosing aim field";
 	string actingStatus;
 	Field fromField;
+	Stronghold assaultBase;
 
 	public BJB()
 	{
@@ -40,6 +41,7 @@ public class BJB : Character {
 	public bool ContinueActing()
 	{
 		if (actingStatus == CHOOSING_STRONG) {
+			assaultBase = MapHandler.instance.chosenField.myStronghold;
 			actingStatus = CHOOSING_TER;
 			Selection.SelectionTimeOver (Selection.MY_STRONGS);
 			Selection.SelectionTime (Selection.STRONG_TER);
@@ -52,9 +54,11 @@ public class BJB : Character {
 			return true;
 		}
 		else if (actingStatus == CHOOSING_AIM) { //TODO territory modifying
-			fromField.RemoveOwner(myPlayer);
+			//fromField.RemoveOwner(myPlayer);
+			assaultBase.RemoveTerritoryBit(fromField);
 			fromField.DestroyIfMust ();
-			MapHandler.instance.chosenField.AddOwner (myPlayer);
+			assaultBase.AddTerritoryBit (MapHandler.instance.chosenField);
+			//MapHandler.instance.chosenField.AddOwner (myPlayer);
 			MapHandler.instance.chosenField.DestroyIfMust ();
 			actingStatus = RESTING;
 			Selection.SelectionTimeOver (Selection.BORDERS);

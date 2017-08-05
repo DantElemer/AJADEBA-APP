@@ -10,7 +10,7 @@ public class MapHandler : MonoBehaviour {
 	public Field[][] fields {get; private set;} //the map, "holes" are null elements
 
 	public Field chosenField; //the field currently pressed, after releasing the field, it's available until next tick (that's why we can use it in FieldClicked for example)
-	Field assaultBase; // the field from which the assault can start
+	public Field assaultBase {get; private set;} // the field from which the assault can start
 	bool assaultBaseJustChosen=false;
 
 	float timeSincePress = 0; // if a a field is being pressed it stores how much time passed since the start of the press, otherwise it's zero
