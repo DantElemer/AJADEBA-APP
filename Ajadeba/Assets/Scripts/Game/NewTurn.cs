@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+//TODO CharacterPanelen lehet dolgozni miközben ez meg van nyitva
 public class NewTurn : MonoBehaviour {
 
 	public Text txtNewTurn;

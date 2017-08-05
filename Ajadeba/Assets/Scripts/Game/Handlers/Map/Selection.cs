@@ -4,6 +4,8 @@ using System.Collections;
 public class Selection : MonoBehaviour { 
 
 	public const string VILLAGES = "villages";
+	public const string ASSAULT_AIMS = "possible assault aims"; //assuming assault base is chosen fuild; at the moment it finds enemy strongholds later barrack assault can be added
+	static Stronghold assaultBase;
 
 	//for BJB
 	public const string MY_STRONGS = "friendly strongs"; //current player's strongholds 
@@ -41,16 +43,27 @@ public class Selection : MonoBehaviour {
 				ter.ActivateSelection ();
 				somethingSelected = true;
 			}
-		}
-		else if (whatToSelect == BORDERS) {
+		} else if (whatToSelect == BORDERS) {
 			ter = MapHandler.instance.chosenField;
-			foreach (Field tery in terOwner.territory) 
-				if (ter!=tery)
+			foreach (Field tery in terOwner.territory)
+				if (ter != tery)
 					foreach (Field bord in tery.Borders())
 						if (ter != bord) {
 							bord.ActivateSelection ();
 							somethingSelected = true;
 						}
+		} else if (whatToSelect == ASSAULT_AIMS) {
+			assaultBase = MapHandler.instance.chosenField.myStronghold;
+			foreach (Field[] row in MapHandler.instance.fields)
+				foreach (Field f in row)
+					if (f != null)
+					if (f.HasPart (Field.STRONGHOLD))
+					if (PlayerHandler.instance.areEnemies (assaultBase.owner, f.myStronghold.owner))
+					if (assaultBase.attStrength > f.myStronghold.defStrength)
+					if (Connection.CanGo (assaultBase, f.myStronghold)) {
+						somethingSelected = true;
+						f.ActivateSelection ();
+					}
 		}
 
 		return somethingSelected;
@@ -60,23 +73,20 @@ public class Selection : MonoBehaviour {
 	{
 		bool somethingDeselected = false;
 
-		if (toWhat == VILLAGES) 
-		{
+		if (toWhat == VILLAGES) {
 			foreach (Field[] row in MapHandler.instance.fields)
 				foreach (Field f in row)
-					if (f!=null)
+					if (f != null)
 					if (f.HasPart (Field.VILLAGE)) {
 						somethingDeselected = true;
 						f.DeactivateSelection ();
 					}
-		}
-		else if (toWhat == MY_STRONGS) 
-		{
+		} else if (toWhat == MY_STRONGS) {
 			foreach (Field[] row in MapHandler.instance.fields)
 				foreach (Field f in row)
-					if (f!=null)
+					if (f != null)
 					if (f.HasPart (Field.STRONGHOLD))
-					if (f.myStronghold.owner==strongOwner) {
+					if (f.myStronghold.owner == strongOwner) {
 						somethingDeselected = true;
 						f.DeactivateSelection ();
 					}
@@ -86,13 +96,24 @@ public class Selection : MonoBehaviour {
 				somethingDeselected = true;
 			}
 		else if (toWhat == BORDERS) {
-			foreach (Field tery in terOwner.territory) 
-				if (ter!=tery)
+			foreach (Field tery in terOwner.territory)
+				if (ter != tery)
 					foreach (Field bord in tery.Borders())
 						if (ter != bord) {
 							bord.DeactivateSelection ();
 							somethingDeselected = true;
 						}
+		} else if (toWhat == ASSAULT_AIMS) {
+			foreach (Field[] row in MapHandler.instance.fields)
+				foreach (Field f in row)
+					if (f != null)
+					if (f.HasPart (Field.STRONGHOLD))
+					if (PlayerHandler.instance.areEnemies (assaultBase.owner, f.myStronghold.owner))
+					if (assaultBase.attStrength > f.myStronghold.defStrength)
+					if (Connection.CanGo (assaultBase, f.myStronghold)) {
+						somethingDeselected = true;
+						f.DeactivateSelection ();
+					}
 		}
 
 		return somethingDeselected;

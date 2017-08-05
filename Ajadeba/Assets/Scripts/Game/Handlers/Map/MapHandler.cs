@@ -45,7 +45,6 @@ public class MapHandler : MonoBehaviour {
 		bool prolificChoosing = false; //currently searching for a village to prolify
 		bool bJBing = false; //currently bjb acting is taking place
 
-
 	public static MapHandler instance //singleton magic
 	{
 		get 
@@ -90,96 +89,42 @@ public class MapHandler : MonoBehaviour {
 		assaultBaseJustChosen = false;
 	}
 
-	void GenerateMap() //quite good for testing I think :)
-	{
-		fields = new Field[10][];
-		for (int i = 0; i < 10; i++) {
-			fields [i] = new Field[10];
-			for (int j = 0; j < 10; j++) {
-				if (Random.value < 0.95) { //néhányat kihagyunk 
-					fields [i] [j] = Instantiate (fieldPrefab);
-					fields [i] [j].index = 10 * i + j;
-					fields [i] [j].xCoord = i;
-					fields [i] [j].yCoord = j;
-					fields [i] [j].transform.Translate (new Vector3 (Field.WIDTH * (i - 5), Field.WIDTH * (j - 5), 0));
-					fields [i] [j].transform.SetParent (gameObject.transform);
-					if (Random.value < 0.1)
-						fields [i] [j].AddVillage ();
-					else {
-						if (Random.value < 0.1)
-							fields [i] [j].AddRoad (Field.NORTH);
-						if (Random.value < 0.1)
-							fields [i] [j].AddRoad (Field.EAST);
-						if (Random.value < 0.1)
-							fields [i] [j].AddRoad (Field.SOUTH);
-						if (Random.value < 0.1)
-							fields [i] [j].AddRoad (Field.WEST);
-					}
-				} 
-			}
-		}
-	}
-
-	void KillCheckOnFullMap()
-	{
-		foreach (Field[] row in fields)
-			foreach (Field f in row)
-				if (f != null) //could use inMap as well
-					f.DestroyIfMust(); 				
-	}
-
-	void AssaultOn() //a stronghold is chosen to start assault from it
-	{
-		assaultBase = chosenField;
-		assaultBase.myStronghold.transform.Find ("AssaultOn").gameObject.SetActive (true);
-		assaultBaseJustChosen = true;
-	}
-
-	void AssaultOff() //assault was done, or canceled
-	{
-		if (assaultBase == null)
-			return;
-		assaultBase.myStronghold.transform.Find ("AssaultOn").gameObject.SetActive (false);
-		assaultBase = null;
-	}
-
 	void FieldClicked()
 	{
 		if (status != CHOOSER_STATE) {
-			if (assaultBase != null) { // one stronghold is chosen
-				if (chosenField.HasPart (Field.STRONGHOLD))  // and the field clicked also has a stronghold
-			if (PlayerHandler.instance.areEnemies (assaultBase.myStronghold.owner, chosenField.myStronghold.owner)) // and they are enemies
-			if (assaultBase.myStronghold.attStrength > chosenField.myStronghold.defStrength) // and attacker is stronger
-			if (Connection.CanGo (assaultBase.myStronghold, chosenField.myStronghold)) { // and attacker reaches defender
-					chosenField.RemoveStronghold ();
-					chosenField.AddRuin ();
-					KillCheckOnFullMap ();
-					PlayerHandler.instance.currentPlayer.MayFinishedTurn ();
-				}
-				//AssaultOff ();
-			} else if (chosenField.HasPart (Field.STRONGHOLD)) { // no stronghold chosen yet, clicked field has stronghold
+			if (chosenField.HasPart (Field.STRONGHOLD)) { //start an assault?
 				if (chosenField.myStronghold.owner == PlayerHandler.instance.currentPlayer)
 				if (PlayerHandler.instance.currentPlayer.stepsLeft == PlayerHandler.instance.currentPlayer.maxSteps) {
-					AssaultOn ();
+					AssaultOn (); 
 					Debug.Log ("Attack: " + chosenField.myStronghold.attStrength);
 				} else
 					Debug.Log ("Assault takes a full turn!");
 			}	
-		} else {
-			if (prolificChoosing)
-			if (chosenField.HasPart (Field.VILLAGE)) {
-				chosenField.myVillage.Prolificate ();
-				prolificChoosing = false;
-				status=NORMAL_STATE;
-				Selection.SelectionTimeOver (Selection.VILLAGES);
-				PlayerHandler.instance.currentPlayer.MayFinishedTurn ();
-			} else
-				Debug.Log ("Idiot, it's not a village!");
-			else if (bJBing)
-			if (chosenField.selectable)
-			if (!(PlayerHandler.instance.currentPlayer.MyChar (Character.BJB) as BJB).ContinueActing ()) { //acting terminated
-				bJBing = false;
-				PlayerHandler.instance.currentPlayer.MayFinishedTurn ();
+		} 
+		else {
+			if (prolificChoosing) {
+				if (chosenField.HasPart (Field.VILLAGE)) {
+					chosenField.myVillage.Prolificate ();
+					prolificChoosing = false;
+					status = NORMAL_STATE;
+					Selection.SelectionTimeOver (Selection.VILLAGES);
+					PlayerHandler.instance.currentPlayer.MayFinishedTurn ();
+				} else
+					Debug.Log ("Idiot, it's not a village!");
+			} else if (bJBing) {
+				if (chosenField.selectable)
+				if (!(PlayerHandler.instance.currentPlayer.MyChar (Character.BJB) as BJB).ContinueActing ()) { //acting terminated
+					bJBing = false;
+					PlayerHandler.instance.currentPlayer.MayFinishedTurn ();
+				} 
+			} else if (assaultBase != null) { //so assault choosing...
+				if (chosenField.selectable) {
+					AssaultOff ();
+					chosenField.RemoveStronghold ();
+					chosenField.AddRuin ();
+					KillCheckOnFullMap (); //a bit of waste (TODO)
+					PlayerHandler.instance.currentPlayer.MayFinishedTurn ();
+				}
 			}
 		}
 	}
@@ -234,6 +179,28 @@ public class MapHandler : MonoBehaviour {
 		}
 	}
 
+	void AssaultOn() //a stronghold is chosen to start assault from it
+	{
+		if (Selection.SelectionTime (Selection.ASSAULT_AIMS)) {
+			assaultBase = chosenField;
+			assaultBase.myStronghold.transform.Find ("AssaultOn").gameObject.SetActive (true);
+			assaultBaseJustChosen = true;
+			Selection.SelectionTime (Selection.ASSAULT_AIMS);
+			status = CHOOSER_STATE;
+		} else
+			Debug.Log ("You cannot attack from here anything");
+	}
+
+	void AssaultOff() //assault was done, or canceled
+	{
+		if (assaultBase == null)
+			return;
+		assaultBase.myStronghold.transform.Find ("AssaultOn").gameObject.SetActive (false);
+		assaultBase = null;
+		Selection.SelectionTimeOver(Selection.ASSAULT_AIMS);
+		status = NORMAL_STATE;
+	}
+
 	public bool InMap(int x, int y) //is there a field?
 	{
 		if (x < 0 || y < 0)
@@ -267,4 +234,43 @@ public class MapHandler : MonoBehaviour {
 		bJBing = true;
 		Debug.Log ("Choose one of your strongholds!");
 	}
+
+	void GenerateMap() //quite good for testing I think :)
+	{
+		fields = new Field[10][];
+		for (int i = 0; i < 10; i++) {
+			fields [i] = new Field[10];
+			for (int j = 0; j < 10; j++) {
+				if (Random.value < 0.95) { //néhányat kihagyunk 
+					fields [i] [j] = Instantiate (fieldPrefab);
+					fields [i] [j].index = 10 * i + j;
+					fields [i] [j].xCoord = i;
+					fields [i] [j].yCoord = j;
+					fields [i] [j].transform.Translate (new Vector3 (Field.WIDTH * (i - 5), Field.WIDTH * (j - 5), 0));
+					fields [i] [j].transform.SetParent (gameObject.transform);
+					if (Random.value < 0.1)
+						fields [i] [j].AddVillage ();
+					else {
+						if (Random.value < 0.1)
+							fields [i] [j].AddRoad (Field.NORTH);
+						if (Random.value < 0.1)
+							fields [i] [j].AddRoad (Field.EAST);
+						if (Random.value < 0.1)
+							fields [i] [j].AddRoad (Field.SOUTH);
+						if (Random.value < 0.1)
+							fields [i] [j].AddRoad (Field.WEST);
+					}
+				} 
+			}
+		}
+	}
+
+	void KillCheckOnFullMap()
+	{
+		foreach (Field[] row in fields)
+			foreach (Field f in row)
+				if (f != null) //could use inMap as well
+					f.DestroyIfMust(); 				
+	}
+
 }

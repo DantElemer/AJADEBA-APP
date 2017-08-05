@@ -51,7 +51,7 @@ public class BJB : Character {
 			Selection.SelectionTime (Selection.BORDERS);
 			return true;
 		}
-		else if (actingStatus == CHOOSING_AIM) { //TODO
+		else if (actingStatus == CHOOSING_AIM) { //TODO territory modifying
 			fromField.RemoveOwner(myPlayer);
 			fromField.DestroyIfMust ();
 			MapHandler.instance.chosenField.AddOwner (myPlayer);
