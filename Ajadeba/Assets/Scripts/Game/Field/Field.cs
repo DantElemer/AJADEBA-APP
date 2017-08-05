@@ -21,6 +21,7 @@ public class Field : MonoBehaviour {
 	public GameObject westRoadPref;
 
 	public GameObject territoryPref;
+	public bool selectable=false;
 
 	public const string NORTH = "north";
 	public const string EAST = "east";
@@ -98,7 +99,7 @@ public class Field : MonoBehaviour {
 	public void RemoveBarrack () 
 	{
 		DestroyImmediate (transform.Find (BARRACK).gameObject); //a mocsok Unity amúgy késlelteti és a láncszabály miatt esetleg más erőviszonyok lennének
-		AddRuin();	
+		//AddRuin();	
 	}
 
 	public void AddStrongBase (Player builder) 
@@ -113,7 +114,7 @@ public class Field : MonoBehaviour {
 	public void RemoveStrongBase () 
 	{
 		DestroyImmediate (transform.Find (STRONGHOLD_BASE).gameObject); //a mocsok Unity amúgy késlelteti és a láncszabály miatt a baseCheck végtelen ciklusba kerül
-		AddRuin();
+		//AddRuin();
 	}
 
 	public void AddStronghold (Player owner) 
@@ -130,7 +131,7 @@ public class Field : MonoBehaviour {
 	public void RemoveStronghold () 
 	{
 		myStronghold.Die ();
-		AddRuin ();
+		//AddRuin ();
 	}
 
 	public bool IsOwner(Player who)
@@ -253,5 +254,47 @@ public class Field : MonoBehaviour {
 	void OnMouseUp()
 	{
 		MapHandler.instance.FieldReleased(this);
+	}
+
+	public void ActivateSelection()
+	{
+		gameObject.transform.FindChild ("selectable").gameObject.SetActive(true);
+		selectable = true;
+	}
+
+	public void DeactivateSelection()
+	{
+		gameObject.transform.FindChild ("selectable").gameObject.SetActive(false);
+		selectable = false;
+	}
+
+	public List<Field> Borders()
+	{
+		List<Field> borders = new List<Field> ();
+		if (MapHandler.instance.InMap (xCoord, yCoord + 1))
+			borders.Add (MapHandler.instance.fields [xCoord] [yCoord + 1]);
+		if (MapHandler.instance.InMap (xCoord, yCoord - 1))
+			borders.Add (MapHandler.instance.fields [xCoord] [yCoord - 1]);
+		if (MapHandler.instance.InMap (xCoord + 1, yCoord))
+			borders.Add (MapHandler.instance.fields [xCoord + 1] [yCoord]);
+		if (MapHandler.instance.InMap (xCoord - 1, yCoord))
+			borders.Add (MapHandler.instance.fields [xCoord - 1] [yCoord]);
+		return borders;
+	}
+
+	public void DestroyIfMust() //destroys undefended lazies, undefendeds in enemy territory
+	{
+		if (HasPart (Field.STRONGHOLD_BASE) && HasOtherOwner (null)) {
+			RemoveStrongBase ();
+			AddRuin ();
+		}
+		if (HasPart (Field.BARRACK) && !IsOwner (myBarrack.owner) && HasEnemyOwner (myBarrack.owner)) {
+			RemoveBarrack ();
+			AddRuin ();
+		}
+		if (HasPart (Field.BARRACK) && !IsOwner (myBarrack.owner) && myBarrack.isLazy) {
+			RemoveBarrack ();
+			AddRuin ();
+		}	
 	}
 }

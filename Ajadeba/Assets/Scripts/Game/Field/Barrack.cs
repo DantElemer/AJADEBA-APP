@@ -13,6 +13,8 @@ public class Barrack : FieldPart {
 		GameObject flag = gameObject.transform.Find ("Flag").gameObject;
 		SpriteRenderer flagSR = flag.GetComponent<SpriteRenderer> ();
 		flagSR.sprite = owner.flag;
+		if (myField.IsOwner (owner))
+			isLazy = true;
 	}
 
 	public int strength

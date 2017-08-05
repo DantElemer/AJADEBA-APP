@@ -57,7 +57,7 @@ public class CharacterPanelHandler : MonoBehaviour { //TODO staticolás/singleto
 		MapHandler.instance.SetStatus(MapHandler.FROZEN_STATE);
 		//gameObject.transform.FindChild ("ClickElsewhereBtn").gameObject.SetActive (true);
 
-		int numOfChars = 6;
+		int numOfChars = 7;
 		for (int i = 0; i < numOfChars; i++) //hát nem gyönyönrű?
 		{
 			CharacterChooser newChooser = Instantiate (ChChooserPref);
@@ -77,6 +77,8 @@ public class CharacterPanelHandler : MonoBehaviour { //TODO staticolás/singleto
 				newChooser.Inic (new Trespasser ());
 			else if (i==5) 
 				newChooser.Inic (new Stakhanovite ());
+			else if (i==6) 
+				newChooser.Inic (new BJB ());
 
 			if (PlayerHandler.instance.currentPlayer.HasChar (newChooser.myChar.name))
 				newChooser.gameObject.GetComponentInChildren<Button> ().interactable = false;
@@ -86,7 +88,7 @@ public class CharacterPanelHandler : MonoBehaviour { //TODO staticolás/singleto
 	public void CloseChChoosers()
 	{
 		if (MapHandler.instance.pStatus == MapHandler.FROZEN_STATE)
-		MapHandler.instance.SetStatus (MapHandler.NORMAL_STATE);
+			MapHandler.instance.SetStatus (MapHandler.NORMAL_STATE);
 		//gameObject.transform.FindChild ("ClickElsewhereBtn").gameObject.SetActive (false);
 
 		foreach (CharacterChooser chCh in chChoosers)

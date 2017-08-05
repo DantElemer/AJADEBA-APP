@@ -10,10 +10,14 @@ public class BaseConquering : MonoBehaviour {
 			foreach (Field f in row)
 				if (f != null) //could use inMap as well
 				{
-					if (f.HasPart (Field.STRONGHOLD_BASE) && f.HasOtherOwner (null))
+					if (f.HasPart (Field.STRONGHOLD_BASE) && f.HasOtherOwner (null)) {
 						f.RemoveStrongBase ();
-					if (f.HasPart (Field.BARRACK) && !f.IsOwner (f.myBarrack.owner) && f.HasEnemyOwner (f.myBarrack.owner))
+						f.AddRuin ();
+					}
+					if (f.HasPart (Field.BARRACK) && !f.IsOwner (f.myBarrack.owner) && f.HasEnemyOwner (f.myBarrack.owner)) {
 						f.RemoveBarrack ();
+						f.AddRuin ();
+					}
 				}
 	}
 

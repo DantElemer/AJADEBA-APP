@@ -17,6 +17,7 @@ public class Character {
 	public const string GYONGYI = "Gyöngyi";
 	public const string TRESPASSER = "Birtokháborító";
 	public const string STAKHANOVITE = "Sztahanovista";
+	public const string BJB = "BJB";
 
 	public virtual void AddedToPlayer(Player toWhom)
 	{
@@ -34,5 +35,10 @@ public class Character {
 		turnsSpent++;
 		if (turnsSpent % evolveTime == 0)
 			Evolve ();
+	}
+
+	public virtual void UseUpTurnEndBoost()
+	{
+		hasTurnEndBoost = false;
 	}
 }

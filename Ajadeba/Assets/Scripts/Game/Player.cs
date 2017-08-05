@@ -73,7 +73,8 @@ public class Player : MonoBehaviour {
 		myChars.Add(newCh);
 		newCh.AddedToPlayer (this);
 		Debug.Log (newCh.name + " added to " + myName);
-		PlayerHandler.instance.NextPlayer ();
+		if (!(newCh is Prolific))
+			MayFinishedTurn ();
 	}
 
 	public void TurnFinished()
@@ -82,16 +83,30 @@ public class Player : MonoBehaviour {
 			c.TurnPassed ();
 	}
 
+
+	//TODO bármilyen sorrendben használhassa a boostjait?
 	public void FinishedBuilding()
 	{
 		if (HasChar (Character.STAKHANOVITE))
-			if (MyChar (Character.STAKHANOVITE).hasTurnEndBoost) {
-				stepsLeft++;
-				MyChar (Character.STAKHANOVITE).hasTurnEndBoost = false;
-			}
+			if (MyChar (Character.STAKHANOVITE).hasTurnEndBoost) //it's here because stakhanovite's boost is available only after building TODO értelmesebben?
+				MyChar (Character.STAKHANOVITE).UseUpTurnEndBoost ();
 			else
-				PlayerHandler.instance.NextPlayer ();
+				MayFinishedTurn ();
 		else
+			MayFinishedTurn ();
+	}
+
+	public void MayFinishedTurn() //only turn end boosts left
+	{
+		bool hasBoost = false;
+
+		if (HasChar (Character.BJB))
+		if (MyChar (Character.BJB).hasTurnEndBoost) {
+			MyChar (Character.BJB).UseUpTurnEndBoost ();
+			hasBoost = true;
+		}
+
+		if (!hasBoost)
 			PlayerHandler.instance.NextPlayer ();
 	}
 

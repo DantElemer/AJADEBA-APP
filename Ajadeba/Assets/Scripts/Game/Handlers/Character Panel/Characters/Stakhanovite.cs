@@ -15,4 +15,10 @@ public class Stakhanovite : Character { //sztahanovista
 		base.TurnPassed ();
 		hasTurnEndBoost = true;
 	}
+
+	public override void UseUpTurnEndBoost ()
+	{
+		base.UseUpTurnEndBoost ();
+		myPlayer.stepsLeft++;
+	}
 }

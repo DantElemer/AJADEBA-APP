@@ -29,6 +29,7 @@ public class MapHandler : MonoBehaviour {
 	public string pStatus {get {return status;}}
 		//chooser state
 	bool prolificChoosing=false; //currently searching for a village to prolify
+	bool bJBing=false; //currently bjb acting is taking place
 
 
 	public static MapHandler instance //singleton magic
@@ -131,8 +132,9 @@ public class MapHandler : MonoBehaviour {
 			if (assaultBase.myStronghold.attStrength > chosenField.myStronghold.defStrength) // and attacker is stronger
 			if (Connection.CanGo (assaultBase.myStronghold, chosenField.myStronghold)) { // and attacker reaches defender
 					chosenField.RemoveStronghold ();
+					chosenField.AddRuin ();
 					KillUndefendedLazies ();
-					PlayerHandler.instance.NextPlayer ();
+					PlayerHandler.instance.currentPlayer.MayFinishedTurn ();
 				}
 				AssaultOff ();
 			} else if (chosenField.HasPart (Field.STRONGHOLD)) { // no stronghold chosen yet, clicked field has stronghold
@@ -149,8 +151,16 @@ public class MapHandler : MonoBehaviour {
 				chosenField.myVillage.Prolificate ();
 				prolificChoosing = false;
 				SetStatus (NORMAL_STATE);
+				Selection.SelectionTimeOver (Selection.VILLAGES);
+				PlayerHandler.instance.currentPlayer.MayFinishedTurn ();
 			} else
 				Debug.Log ("Idiot, it's not a village!");
+			else if (bJBing)
+			if (chosenField.selectable)
+			if (!(PlayerHandler.instance.currentPlayer.MyChar (Character.BJB) as BJB).ContinueActing ()) { //acting terminated
+				bJBing = false;
+				PlayerHandler.instance.currentPlayer.MayFinishedTurn ();
+			}
 		}
 	}
 
@@ -217,7 +227,22 @@ public class MapHandler : MonoBehaviour {
 
 	public void Prolification()
 	{
+		bool atLeastOneVillage = Selection.SelectionTime (Selection.VILLAGES);
+
+		if (atLeastOneVillage) {
+			SetStatus (CHOOSER_STATE);
+			prolificChoosing = true; //TODO kiemelni a falvakat
+			Debug.Log ("Choose a village to prolify!");
+		} else {
+			Debug.Log ("No village you cretin");
+			PlayerHandler.instance.NextPlayer ();
+		}
+	}
+
+	public void BJBing()
+	{
 		SetStatus (CHOOSER_STATE);
-		prolificChoosing = true; //TODO kiemelni a falvakat
+		bJBing = true;
+		Debug.Log ("Choose one of your strongholds!");
 	}
 }
