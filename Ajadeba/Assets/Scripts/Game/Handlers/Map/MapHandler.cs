@@ -3,33 +3,47 @@ using System.Collections;
 
 public class MapHandler : MonoBehaviour { 
 
-	private static MapHandler sInstance = null;
+	private static MapHandler sInstance = null; //the only instance of MapHandler (singleton)
 
 
-	public GameObject map;
-	public Field fieldPrefab;
-	public Field[][] fields; 
+	public Field fieldPrefab; //for creating fields...
+	public Field[][] fields {get; private set;} //the map, "holes" are null elements
 
-	public Field chosenField; //the field currently pressed
+	public Field chosenField; //the field currently pressed, after releasing the field, it's available until next tick (that's why we can use it in FieldClicked for example)
 	Field assaultBase; // the field from which the assault can start
-	float timeSincePress = 0; // if a a field is being pressed it stores how much time passed since the start of the press, otherwise zero
+	bool assaultBaseJustChosen=false;
 
-	public bool checkMode = false;
-	public Field fromF;
+	float timeSincePress = 0; // if a a field is being pressed it stores how much time passed since the start of the press, otherwise it's zero
+	bool mousePressed = false; 
 
-	const float MAX_TIME_FOR_CLICK = 0.2f;
-	bool longPress=false;
+	public bool checkMode = false; // for debugging Connection
+	public Field fromF; // for debugging Connection
+
+	const float MAX_TIME_FOR_CLICK = 0.15f; //if you do not release the field after this amount of time it will be considered a "long press", not a click
+	bool longPress = false; //...
 
 
 	//status
-	public const string NORMAL_STATE = "normal state"; 
-	public const string CHOOSER_STATE = "chooser state";
-	public const string FROZEN_STATE = "frozen state"; //not interactable
-	string status = NORMAL_STATE;
-	public string pStatus {get {return status;}}
+	public const string NORMAL_STATE = "normal state"; //you can build, start assaults etc.
+	public const string CHOOSER_STATE = "chooser state"; //used for choosing a field (Prolific, BJB...)
+	public const string FROZEN_STATE = "frozen state"; //not interactable, you can't do anything on the map
+	string stat; //never use directly!
+	public string status {
+		get { 
+			return stat;
+		}
+		set 
+		{
+			if (value != stat) 
+			{
+				stat = value;
+				Debug.Log ("[MapHandler] Switched to " + stat);
+			}
+		}
+	} 
 		//chooser state
-	bool prolificChoosing=false; //currently searching for a village to prolify
-	bool bJBing=false; //currently bjb acting is taking place
+		bool prolificChoosing = false; //currently searching for a village to prolify
+		bool bJBing = false; //currently bjb acting is taking place
 
 
 	public static MapHandler instance //singleton magic
@@ -45,20 +59,27 @@ public class MapHandler : MonoBehaviour {
 	}
 
 	void Start () {
-		//TODO: generate map normally
-		GenerateMap();
+		status = NORMAL_STATE;
+		GenerateMap(); //TODO: generate map normally
 	}
 
-	void Update()
+	void Update() //part of mouse event handling
 	{
 		if (status==FROZEN_STATE)
 			return;
-		
+
+		if (Input.GetMouseButton (0) && !mousePressed) { //mouse has just being pressed
+			mousePressed = true;
+			if (chosenField == null)
+				MousePressedOutOfMap ();
+		}
 		if (!Input.GetMouseButton (0)) { //left button is not pressed
+			if (mousePressed) //mouse has been released rigth now
+				MouseReleased();
 			chosenField = null;
 			longPress = false;
 		}
-		if (chosenField != null) //so mouse is pressed
+		if (chosenField != null) //so mouse is pressed (if it wasn't chosenField had been set to null up there)
 		{
 			timeSincePress += Time.deltaTime;
 			if (timeSincePress > MAX_TIME_FOR_CLICK && !longPress) {
@@ -66,9 +87,10 @@ public class MapHandler : MonoBehaviour {
 				longPress = true;
 			}
 		}
+		assaultBaseJustChosen = false;
 	}
 
-	void GenerateMap()
+	void GenerateMap() //quite good for testing I think :)
 	{
 		fields = new Field[10][];
 		for (int i = 0; i < 10; i++) {
@@ -80,7 +102,7 @@ public class MapHandler : MonoBehaviour {
 					fields [i] [j].xCoord = i;
 					fields [i] [j].yCoord = j;
 					fields [i] [j].transform.Translate (new Vector3 (Field.WIDTH * (i - 5), Field.WIDTH * (j - 5), 0));
-					fields [i] [j].transform.SetParent (map.transform);
+					fields [i] [j].transform.SetParent (gameObject.transform);
 					if (Random.value < 0.1)
 						fields [i] [j].AddVillage ();
 					else {
@@ -98,29 +120,27 @@ public class MapHandler : MonoBehaviour {
 		}
 	}
 
-	void KillUndefendedLazies()
+	void KillCheckOnFullMap()
 	{
 		foreach (Field[] row in fields)
 			foreach (Field f in row)
 				if (f != null) //could use inMap as well
-				if (f.HasPart (Field.BARRACK))
-				if (f.myBarrack.isLazy && !f.IsOwner (f.myBarrack.owner))
-					f.RemoveBarrack ();
-					
+					f.DestroyIfMust(); 				
 	}
 
-	void AssaultOn()
+	void AssaultOn() //a stronghold is chosen to start assault from it
 	{
 		assaultBase = chosenField;
 		assaultBase.myStronghold.transform.Find ("AssaultOn").gameObject.SetActive (true);
+		assaultBaseJustChosen = true;
 	}
 
-	void AssaultOff()
+	void AssaultOff() //assault was done, or canceled
 	{
-		if (assaultBase != null) {
-			assaultBase.myStronghold.transform.Find ("AssaultOn").gameObject.SetActive (false);
-			assaultBase = null;
-		} 
+		if (assaultBase == null)
+			return;
+		assaultBase.myStronghold.transform.Find ("AssaultOn").gameObject.SetActive (false);
+		assaultBase = null;
 	}
 
 	void FieldClicked()
@@ -133,10 +153,10 @@ public class MapHandler : MonoBehaviour {
 			if (Connection.CanGo (assaultBase.myStronghold, chosenField.myStronghold)) { // and attacker reaches defender
 					chosenField.RemoveStronghold ();
 					chosenField.AddRuin ();
-					KillUndefendedLazies ();
+					KillCheckOnFullMap ();
 					PlayerHandler.instance.currentPlayer.MayFinishedTurn ();
 				}
-				AssaultOff ();
+				//AssaultOff ();
 			} else if (chosenField.HasPart (Field.STRONGHOLD)) { // no stronghold chosen yet, clicked field has stronghold
 				if (chosenField.myStronghold.owner == PlayerHandler.instance.currentPlayer)
 				if (PlayerHandler.instance.currentPlayer.stepsLeft == PlayerHandler.instance.currentPlayer.maxSteps) {
@@ -150,7 +170,7 @@ public class MapHandler : MonoBehaviour {
 			if (chosenField.HasPart (Field.VILLAGE)) {
 				chosenField.myVillage.Prolificate ();
 				prolificChoosing = false;
-				SetStatus (NORMAL_STATE);
+				status=NORMAL_STATE;
 				Selection.SelectionTimeOver (Selection.VILLAGES);
 				PlayerHandler.instance.currentPlayer.MayFinishedTurn ();
 			} else
@@ -164,12 +184,24 @@ public class MapHandler : MonoBehaviour {
 		}
 	}
 
-	public void FieldPressed (Field field) //mouse down on field
+	void MousePressedOutOfMap() //...
+	{
+		AssaultOff ();
+	}
+
+	void MouseReleased() //anywhere
+	{
+		if (!assaultBaseJustChosen)
+			AssaultOff ();
+		mousePressed = false;
+	}
+
+	public void FieldPressed (Field field) //mouse down on field, it sets chosenField
 	{
 		if (status==FROZEN_STATE)
 			return;
 		
-		if (checkMode) {
+		if (checkMode) { //TODO kiszedni, ha már nem kell
 			if (fromF == null)
 				fromF = field;
 			else {
@@ -180,21 +212,19 @@ public class MapHandler : MonoBehaviour {
 			chosenField = field;
 	}
 
-	public void FieldReleased (Field field) 
+	public void FieldReleased (Field field) //...
 	{
 		if (status==FROZEN_STATE)
 			return;
 		
-		if (BuildHandler.instance.open)
+		if (BuildHandler.instance.open) //if build options were open, close them
 			BuildHandler.instance.CloseBuildOptions();
-		if (!longPress)
+		if (!longPress) //if you were fast enough, you get a click!
 			FieldClicked ();
-		else
-			AssaultOff ();
 		timeSincePress = 0;
 	}
 
-	void LongPress()
+	void LongPress() //main point: opening build options
 	{
 		if (status != CHOOSER_STATE) 
 		{
@@ -204,7 +234,7 @@ public class MapHandler : MonoBehaviour {
 		}
 	}
 
-	public bool InMap(int x, int y)
+	public bool InMap(int x, int y) //is there a field?
 	{
 		if (x < 0 || y < 0)
 			return false;
@@ -217,31 +247,23 @@ public class MapHandler : MonoBehaviour {
 		return true;
 	}
 
-	public void SetStatus (string to)
-	{
-		if (to != status) {
-			status = to;
-			Debug.Log ("[MapHandler] Switched to " + status);
-		}
-	}
-
-	public void Prolification()
+	public void Prolification() //a player just choosed prolific, so get a village...
 	{
 		bool atLeastOneVillage = Selection.SelectionTime (Selection.VILLAGES);
 
 		if (atLeastOneVillage) {
-			SetStatus (CHOOSER_STATE);
-			prolificChoosing = true; //TODO kiemelni a falvakat
+			status = CHOOSER_STATE;
+			prolificChoosing = true; 
 			Debug.Log ("Choose a village to prolify!");
 		} else {
 			Debug.Log ("No village you cretin");
-			PlayerHandler.instance.NextPlayer ();
+			PlayerHandler.instance.currentPlayer.MayFinishedTurn ();
 		}
 	}
 
-	public void BJBing()
+	public void BJBing() //BJB choosing procedure has started...
 	{
-		SetStatus (CHOOSER_STATE);
+		status = CHOOSER_STATE;
 		bJBing = true;
 		Debug.Log ("Choose one of your strongholds!");
 	}
