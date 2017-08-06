@@ -7,7 +7,7 @@ public class Player : MonoBehaviour {
 	public Stronghold mainStrong; //the player's first stronghold (set in Field/AddStronghold)
 	public string myName;
 	public string nation;
-	public Sprite flag;
+	public Sprite flag { get; private set;}
 
 	public int maxSteps = 4; //basically how many roads he can build in a turn
 	public int stepsLeft; 
@@ -88,7 +88,7 @@ public class Player : MonoBehaviour {
 	public void FinishedBuilding()
 	{
 		if (HasChar (Character.STAKHANOVITE))
-			if (MyChar (Character.STAKHANOVITE).hasTurnEndBoost) //it's here because stakhanovite's boost is available only after building TODO értelmesebben?
+			if (MyChar (Character.STAKHANOVITE).hasTurnEndBoost) //it's here because stakhanovite's boost is available only after building
 				MyChar (Character.STAKHANOVITE).UseUpTurnEndBoost ();
 			else
 				MayFinishedTurn ();

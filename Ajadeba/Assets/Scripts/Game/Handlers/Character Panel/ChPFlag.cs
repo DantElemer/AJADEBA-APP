@@ -17,4 +17,10 @@ public class ChPFlag : MonoBehaviour {
 		else
 			Debug.Log (player.myName + "'s flag.");
 	}
+
+	public void SetFlag (Player myPlayer)
+	{
+		player = myPlayer;
+		gameObject.GetComponent<SpriteRenderer> ().sprite = player.flag;
+	}
 }

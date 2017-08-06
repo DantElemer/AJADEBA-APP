@@ -5,10 +5,10 @@ using System.Collections.Generic;
 
 public class Field : MonoBehaviour {
 
-	public int index = -1; 
-	public int xCoord;
-	public int yCoord;
-	public const float WIDTH = 0.3f;
+	public int index = -1; //it's set in MapHandler, and never used elsewhere yet... actually it doesn't seem too useful
+	public int xCoord; //first index in MapHandler's fields
+	public int yCoord; //second index in MapHandler's fields
+	public const float WIDTH = 0.3f; //for graphics...
 
 	public Village villagePref;
 	public Barrack barrackPref;
@@ -21,7 +21,8 @@ public class Field : MonoBehaviour {
 	public GameObject westRoadPref;
 
 	public GameObject territoryPref;
-	public bool selectable=false;
+
+	public bool selectable=false; //in MapHandler's CHOOSER_STATE the selectable fields are shown, this bool stores whether this field is currently selectable or not
 
 	public const string NORTH = "north";
 	public const string EAST = "east";
@@ -38,13 +39,10 @@ public class Field : MonoBehaviour {
 	public const string SOUTH_ROAD = "SouthRoad(Clone)";
 	public const string WEST_ROAD = "WestRoad(Clone)";
 
-	List<Player> owners = new List<Player>();
+	List<Player> owners = new List<Player> (); //pls do not modify it randomly
 
-	void Start () {
-	
-	}
 
-	public static string RoadName (string direction)
+	public static string RoadName (string direction) //returns the PropertyDrawer namespace of the given direction
 	{
 		if (direction == NORTH)
 			return NORTH_ROAD;
@@ -57,21 +55,21 @@ public class Field : MonoBehaviour {
 		return null;
 	}
 
-	public void AddVillage()
+	public void AddVillage () //adds a village to the field
 	{
 		Village vill = Instantiate (villagePref);
 		vill.transform.SetParent (gameObject.transform);
 		vill.transform.position = gameObject.transform.position;
 	}
 
-	public void AddRuin()
+	public void AddRuin () //adds a ruin to the field
 	{
 		Ruin ruin = Instantiate (ruinPref);
 		ruin.transform.SetParent (gameObject.transform);
 		ruin.transform.position = gameObject.transform.position;
 	}
 
-	public void AddRoad(string dir)
+	public void AddRoad (string dir) //adds a road to the field
 	{
 		GameObject road = null;
 		if (dir==NORTH)
@@ -87,7 +85,7 @@ public class Field : MonoBehaviour {
 		road.transform.position = gameObject.transform.position;
 	}
 
-	public void AddBarrack (Player owner)
+	public void AddBarrack (Player owner) //adds a barrack to the field
 	{
 		Barrack bar = Instantiate (barrackPref);
 		bar.transform.SetParent (gameObject.transform);
@@ -96,28 +94,25 @@ public class Field : MonoBehaviour {
 		bar.Inic();
 	}
 
-	public void RemoveBarrack () 
+	public void RemoveBarrack () //removes the barrack from the field
 	{
 		DestroyImmediate (transform.Find (BARRACK).gameObject); //a mocsok Unity amúgy késlelteti és a láncszabály miatt esetleg más erőviszonyok lennének
-		//AddRuin();	
 	}
 
-	public void AddStrongBase (Player builder) 
+	public void AddStrongBase (Player builder) //adds a stronghold base to the field
 	{
 		StrongBase strongBase = Instantiate (strongBasePref);
 		strongBase.transform.SetParent (gameObject.transform);
 		strongBase.transform.position = gameObject.transform.position;
 		strongBase.builder = builder;
-		//AddStronghold (PlayerHandler.instance.currentPlayer); //for testing reasons
 	}
 
-	public void RemoveStrongBase () 
+	public void RemoveStrongBase () //removes the stronghold base from the field
 	{
 		DestroyImmediate (transform.Find (STRONGHOLD_BASE).gameObject); //a mocsok Unity amúgy késlelteti és a láncszabály miatt a baseCheck végtelen ciklusba kerül
-		//AddRuin();
 	}
 
-	public void AddStronghold (Player owner) 
+	public void AddStronghold (Player owner) //adds a stronghold to the field
 	{
 		Stronghold stronghold = Instantiate (strongholdPref);
 		stronghold.transform.SetParent (gameObject.transform);
@@ -128,18 +123,17 @@ public class Field : MonoBehaviour {
 		stronghold.Inic();
 	}
 
-	public void RemoveStronghold () 
+	public void RemoveStronghold () //removes the stronghold from the field
 	{
 		myStronghold.Die ();
-		//AddRuin ();
 	}
 
-	public bool IsOwner(Player who)
+	public bool IsOwner (Player who) //returns if given player has territory on this field
 	{
 		return owners.Contains (who);
 	}
 
-	public bool HasOtherOwner (Player than)
+	public bool HasOtherOwner (Player than) //returns if other player has territory on this field
 	{
 		foreach (Player p in owners)
 			if (p != than)
@@ -147,13 +141,14 @@ public class Field : MonoBehaviour {
 		return false;
 	}
 
-	public bool HasEnemyOwner (Player enemyToWhom)
+	public bool HasEnemyOwner (Player enemyToWhom) //returns if enemy player has territory on this field
 	{
-		return HasOtherOwner (enemyToWhom); //TODO
+		return HasOtherOwner (enemyToWhom); //TODO (teams!)
 	}
 
-	public void AddOwner(Player owner)
+	public void AddOwner (Player owner) //...
 	{
+		//visual stuff
 		GameObject newTer = Instantiate (territoryPref);
 		newTer.transform.SetParent (gameObject.transform);
 		newTer.transform.position = gameObject.transform.position;
@@ -161,12 +156,14 @@ public class Field : MonoBehaviour {
 		SpriteRenderer terSR = newTer.GetComponent<SpriteRenderer> ();
 		terSR.sprite = Resources.Load<Sprite> ("Nations/" + owner.nation + "/TerritoryPattern");
 		terSR.sortingOrder = 5;
+
 		owners.Add (owner);
+
 		if (HasPart (BARRACK))
 			myBarrack.isLazy = true; // if a barrack becomes defended, it becomes lazy
 	}
 
-	public void RemoveOwner(Player owner)
+	public void RemoveOwner(Player owner) //...
 	{
 		string TERRITORY_NAME = "Territory (" + owner.myName + ")"; // ok it's not a constant, but it shouldn't change (cannot make it const)
 		Destroy (gameObject.transform.Find (TERRITORY_NAME).gameObject); 
@@ -174,7 +171,7 @@ public class Field : MonoBehaviour {
 		owners.Remove (owner);
 	}
 
-	public bool HasPart(string part)
+	public bool HasPart (string part) //return if field contains given part
 	{
 		Transform c=gameObject.transform.Find (part);
 		if (c == null)
@@ -182,7 +179,7 @@ public class Field : MonoBehaviour {
 		return true;
 	}
 
-	public bool IsBlankForBuilding() //alagútak nem számítanak
+	public bool IsBlankForBuilding() //...basically IsBlank (except channels shouldn't count)
 	{
 		if (HasPart (BARRACK) || HasPart (STRONGHOLD_BASE) || HasPart (STRONGHOLD) || HasPart (VILLAGE) || HasPart (NORTH_ROAD) || HasPart (EAST_ROAD) 
 			|| HasPart (SOUTH_ROAD) || HasPart (WEST_ROAD) || HasPart (RUIN))
@@ -190,7 +187,7 @@ public class Field : MonoBehaviour {
 		return true;
 	}
 
-	public bool IsFullForBuilding() //alagútak nem számítanak
+	public bool IsFullForBuilding() //returns true if you cannot build anything on it (TODO: channels)
 	{
 		if (HasPart (BARRACK) || HasPart (STRONGHOLD) || HasPart (STRONGHOLD_BASE) || HasPart (VILLAGE) || HasPart (RUIN) ||
 		    HasPart (NORTH_ROAD) && HasPart (EAST_ROAD) && HasPart (SOUTH_ROAD) && HasPart (WEST_ROAD))
@@ -198,7 +195,7 @@ public class Field : MonoBehaviour {
 		return false;
 	}
 
-	public int BarrackStrength()
+	public int BarrackStrength() //if field contains barrack, returns its strength
 	{
 		if (HasPart (BARRACK))
 			return myBarrack.strength;
@@ -206,7 +203,7 @@ public class Field : MonoBehaviour {
 			return 0;
 	}
 
-	public Village myVillage
+	public Village myVillage //returns village part (if has)
 	{
 		get
 		{
@@ -216,7 +213,7 @@ public class Field : MonoBehaviour {
 		}
 	}
 
-	public Barrack myBarrack
+	public Barrack myBarrack //returns barrack part (if has)
 	{
 		get
 		{
@@ -226,7 +223,7 @@ public class Field : MonoBehaviour {
 		}
 	}
 
-	public Stronghold myStronghold
+	public Stronghold myStronghold //returns stronghold part (if has)
 	{
 		get
 		{
@@ -236,7 +233,7 @@ public class Field : MonoBehaviour {
 		}
 	}
 
-	public StrongBase myStrongholdBase
+	public StrongBase myStrongholdBase //returns stronghold base part (if has)
 	{
 		get
 		{
@@ -246,29 +243,29 @@ public class Field : MonoBehaviour {
 		}
 	}
 
-	void OnMouseDown()
+	void OnMouseDown() //fired when mouse pressed on this field
 	{
 		MapHandler.instance.FieldPressed(this);
 	}
 
-	void OnMouseUp()
+	void OnMouseUp() //fired when mouse is released (and was pressed on this field)
 	{
 		MapHandler.instance.FieldReleased(this);
 	}
 
-	public void ActivateSelection()
+	public void ActivateSelection() //becomes selectable
 	{
 		gameObject.transform.FindChild ("selectable").gameObject.SetActive(true);
 		selectable = true;
 	}
 
-	public void DeactivateSelection()
+	public void DeactivateSelection() //...
 	{
 		gameObject.transform.FindChild ("selectable").gameObject.SetActive(false);
 		selectable = false;
 	}
 
-	public List<Field> Borders()
+	public List<Field> Borders() //returns a list of border fields
 	{
 		List<Field> borders = new List<Field> ();
 		if (MapHandler.instance.InMap (xCoord, yCoord + 1))
