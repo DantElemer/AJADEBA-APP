@@ -5,13 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class PlayerHandler : MonoBehaviour {
 
-	private static PlayerHandler sInstance;
+	private static PlayerHandler sInstance; //the only instance
 
-	public Text txtCurrPlayer;
+	public Text txtCurrPlayer; //shows current player's name
 	public Player playerPref;
-	public Player[] players;
-	public Player currentPlayer;
-	public CharacterPanelHandler chPanel;
+	public Player[] players { get; private set; }
+	public Player currentPlayer { get; private set; }
+	public CharacterPanelHandler chPanel; 
 	int currPlayer;
 
 
@@ -36,11 +36,11 @@ public class PlayerHandler : MonoBehaviour {
 
 	void Update()
 	{
-		if (Input.GetKeyDown (KeyCode.N))
+		if (Input.GetKeyDown (KeyCode.N)) //cheat code :D
 			NextPlayer ();
 	}
 	
-	public void NextPlayer()
+	public void NextPlayer() //finishes current player's turn, and starts the next one's
 	{
 		currentPlayer.TurnFinished ();
 		DeactivatePlayer ();
@@ -49,16 +49,16 @@ public class PlayerHandler : MonoBehaviour {
 		SceneManager.LoadScene ("NewTurn", LoadSceneMode.Additive);
 	}
 
-	int FindNextAlive (int index)
+	int FindNextAlive (int index) //finds the next player (not dead) and returns its index (in players); don't call when one player lives!
 	{
 		int nextPlayer = index + 1;
-		if (nextPlayer < players.Length)
-		if (players [nextPlayer].IsAlive ())
-			return nextPlayer;
-		else 
-			return FindNextAlive (nextPlayer);
-		else //it was the last
-			return FindNextAlive (-1);
+		if (nextPlayer < players.Length) 
+			if (players [nextPlayer].alive)
+				return nextPlayer;
+			else 
+				return FindNextAlive (nextPlayer);
+		else //it was the last, so start from beginning
+			return FindNextAlive (-1); //as (-1)+1=0, which is the start index
 	}
 
 	void ActivatePlayer(int itsIndex)
@@ -69,14 +69,14 @@ public class PlayerHandler : MonoBehaviour {
 		txtCurrPlayer.text = "Current player: " + currentPlayer.myName;
 	}
 
-	void DeactivatePlayer() //the current one
+	void DeactivatePlayer() //the current one (there shouldn't be more active at once)
 	{
-		players [currPlayer].SetActive (false);
+		currentPlayer.SetActive (false);
 	}
 
-	void CreatingPlayers()
+	void CreatingPlayers() 
 	{
-		players = new Player[2]; //TODO: number of players can depend on Settings.
+		players = new Player[2]; //TODO: number of players, their properties should depend on Settings.
 
 		Player firstPlayer = Instantiate (playerPref);
 		Player secondPlayer = Instantiate (playerPref);
@@ -96,6 +96,6 @@ public class PlayerHandler : MonoBehaviour {
 
 	public bool areEnemies(Player one, Player two)
 	{
-		return one != two;
+		return one != two; //if there will be teams, change this
 	}
 }

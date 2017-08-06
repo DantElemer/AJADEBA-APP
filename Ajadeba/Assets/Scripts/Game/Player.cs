@@ -9,15 +9,19 @@ public class Player : MonoBehaviour {
 	public string nation;
 	public Sprite flag;
 
-	public int maxSteps = 4;
+	public int maxSteps = 4; //basically how many roads he can build in a turn
 	public int stepsLeft; 
-	public int roadBoost;
+	public int roadBoost; //second player may get 1 or 2 extra roads in the fist round (for balancing)
 
-	bool active = false;
-	bool alive = true;
+	bool active = false; //has setter, getter
+	public bool alive { get; private set; }
 
 	List<Character> myChars = new List<Character> (); //watch out, you need casting for specified stuff!
 
+	void Start()
+	{
+		alive = true; 
+	}
 
 	public void SetFlag()
 	{
@@ -40,12 +44,7 @@ public class Player : MonoBehaviour {
 		return active;
 	}
 
-	public bool IsAlive()
-	{
-		return alive;
-	}
-
-	public bool HasChar(string character)
+	public bool HasChar(string character) //searches by name
 	{
 		foreach (Character c in myChars)
 			if (c.name == character)
@@ -53,14 +52,15 @@ public class Player : MonoBehaviour {
 		return false;
 	}
 
-	public Character MyChar(string which)
+	public Character MyChar(string which) //searches by name, returns null if hasn't got such char
 	{
 		foreach (Character c in myChars)
 			if (c.name == which)
 				return c;
 		return null; //doesn't have such character
 	}
-	public int CharLevel (string character)
+
+	public int CharLevel (string character) //searches by name, returns 0 if hasn't got such char
 	{
 		foreach (Character c in myChars)
 			if (c.name == character)
@@ -68,7 +68,7 @@ public class Player : MonoBehaviour {
 		return 0; //if player doesn't have the character
 	}
 
-	public void AddCharacter(Character newCh)
+	public void AddCharacter(Character newCh) //yay!
 	{
 		myChars.Add(newCh);
 		newCh.AddedToPlayer (this);
@@ -98,6 +98,7 @@ public class Player : MonoBehaviour {
 
 	public void MayFinishedTurn() //only turn end boosts left
 	{
+		stepsLeft = 0;
 		bool hasBoost = false;
 
 		if (HasChar (Character.BJB))

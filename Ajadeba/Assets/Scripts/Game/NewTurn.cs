@@ -8,16 +8,10 @@ public class NewTurn : MonoBehaviour {
 
 	public Text txtNewTurn;
 
-	// Use this for initialization
 	void Start () 
 	{
 		MapHandler.instance.status=MapHandler.FROZEN_STATE;
 		txtNewTurn.text=PlayerHandler.instance.currentPlayer.myName+" köre!";
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
 	}
 
 	public void ResumeGame()

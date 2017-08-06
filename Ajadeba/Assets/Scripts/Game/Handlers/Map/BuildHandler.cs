@@ -3,17 +3,17 @@ using System.Collections;
 
 public class BuildHandler : MonoBehaviour {
 
-	private static BuildHandler sInstance;
+	private static BuildHandler sInstance; //the only instance
 
-	public RoadOption roadOptionPref; 
+	public RoadOption roadOptionPref; // you cannot build this one, but this shows the four road options
 	public BarrackOption barrackOptionPref;
 	public StrongBaseOp strongBaseOpPref;
-
+	// their private instances:
 	RoadOption rO;
 	BarrackOption bO;
 	StrongBaseOp sO;
 
-	public bool open = false;
+	public bool open { get; private set; }
 
 	public static BuildHandler instance //singleton magic
 	{
@@ -25,6 +25,11 @@ public class BuildHandler : MonoBehaviour {
 				sInstance = new BuildHandler ();
 			return sInstance;
 		}
+	}
+
+	void Start()
+	{
+		open = false;
 	}
 
 	public void OpenBuildOptions (Field field)
@@ -40,7 +45,7 @@ public class BuildHandler : MonoBehaviour {
 
 	public void CloseBuildOptions ()
 	{
-		rO.CloseRoadOps ();
+		rO.CloseRoadOps (); //you know, road options are a bit tricky...
 		Destroy (rO.gameObject);
 		Destroy (bO.gameObject);
 		Destroy (sO.gameObject);
@@ -49,15 +54,15 @@ public class BuildHandler : MonoBehaviour {
 
 	public bool CanBuild(Field field, Player who)
 	{
-		if (field.IsFullForBuilding ()) //TODO: alagút kivétel
-		{ 
-			Debug.Log ("You cannot build there, it's full!");
-			return false;
-		}
 		if (field.HasOtherOwner (who)
 			&& !(field.IsOwner(who) && who.HasChar(Character.TRESPASSER))) //birtokháborító azér bejuthat...
 		{
-			Debug.Log ("You cannot build there, it's not your territory territory!");
+			Debug.Log ("You cannot build there, it's not your territory!");
+			return false;
+		}
+		else if (field.IsFullForBuilding ()) //TODO: alagút kivétel
+		{ 
+			Debug.Log ("You cannot build there, it's full!");
 			return false;
 		}
 		return true;

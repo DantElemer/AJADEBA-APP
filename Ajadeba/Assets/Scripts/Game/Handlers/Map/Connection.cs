@@ -19,7 +19,7 @@ public class Connection : MonoBehaviour {
 		public bool eastStrong=false;
 		public bool westMeet=false;
 		public bool westStrong=false;
-		public bool checked2=false;
+		public bool checked2=false; //no idea why that "2" is needed
 		int x, y;
 
 		public point (int xCoord, int yCoord, Player useStrongs, bool canEnterEnTer, Player who)
@@ -56,7 +56,8 @@ public class Connection : MonoBehaviour {
 					if (MapHandler.instance.fields[x-1][y].HasPart(Field.EAST_ROAD)  && (canEnterEnTer || !MapHandler.instance.fields[x-1][y].HasEnemyOwner(who)))
 		                westStrong=true;
 		        }
-
+				//friendly strongholds can count full roads (shall do something similar with ruins as well)
+				//"border strongholds"
 				if (MapHandler.instance.InMap(x,y-1))
 					if (MapHandler.instance.fields[x][y-1].HasPart(Field.STRONGHOLD))
 						if (MapHandler.instance.fields[x][y-1].myStronghold.owner==useStrongs  && (canEnterEnTer || !MapHandler.instance.fields[x][y-1].HasEnemyOwner(who)))
@@ -73,7 +74,7 @@ public class Connection : MonoBehaviour {
 					if (MapHandler.instance.fields[x-1][y].HasPart(Field.STRONGHOLD))
 						if (MapHandler.instance.fields[x-1][y].myStronghold.owner==useStrongs && (canEnterEnTer || !MapHandler.instance.fields[x-1][y].HasEnemyOwner(who)))
 							westStrong=true;
-				
+				//this field has stronghold
 				if (MapHandler.instance.fields[x][y].HasPart(Field.STRONGHOLD))
 					if (MapHandler.instance.fields[x][y].myStronghold.owner==useStrongs)
 		            {
@@ -88,12 +89,12 @@ public class Connection : MonoBehaviour {
 	    public bool isAimPoint(point aimPoint, List<List<point>> points) //recursion
 	    {
 		    if (checked2)
-		     	return false;
-	        checked2 = true;
+				return false; //ha már voltunk itt hagyjuk (romoknál nem biztos, h ezt megtehetjük, de hogy ott mivel terminálunk akkor, azt nem tom)
+	        checked2 = true; 
 	        if (northMeet)
 				if (x == aimPoint.x && y+1 == aimPoint.y)
 	                return true;
-	            else if (northStrong)
+	            else if (northStrong) //északnak folytathatjuk ténykedésünket
 	                if (points[x][y+1].isAimPoint (aimPoint, points))
 	                    return true;
 	        if (southMeet)
@@ -114,11 +115,11 @@ public class Connection : MonoBehaviour {
 	            else if (westStrong)
 	                if (points[x-1][y].isAimPoint (aimPoint, points))
 	                    return true;
-	        return false;
+	        return false; //hát ide elvileg sosem jutunk
 	    }
 	};
 
-	public static bool IsConnected (Field from, Field to, Player who, bool canUseStrongs = false, bool canEnterEnemyTer = true)
+	public static bool IsConnected (Field from, Field to, Player who, bool canUseStrongs = false, bool canEnterEnemyTer = true) //easier to use CanGo functions...
 	{
 		Player strongholdRoads; // the player whose strongholds can be used as roads, it's null if can't use strongholds as roads
 		if (canUseStrongs)
@@ -126,11 +127,12 @@ public class Connection : MonoBehaviour {
 		else
 			strongholdRoads = null;
 
-		if (Math.Abs (from.xCoord - to.xCoord) + Math.Abs (from.yCoord - to.yCoord) == 1) //they are newx to each other, so connection is obvious
+		if (Math.Abs (from.xCoord - to.xCoord) + Math.Abs (from.yCoord - to.yCoord) <= 1) //they are next to each other (or the same field), so connection is obvious
 	        return true;
 
+
 		List<List<point>> points = new List<List<point>>();
-	    for (int i=0;i<MapHandler.instance.fields.Length;i++) //inicializing points
+	    for (int i=0;i<MapHandler.instance.fields.Length;i++) //inicializing points for way finding
 	    {
 			List<point> newRow = new List<point>();
 			for (int j=0;j<MapHandler.instance.fields[i].Length;j++)
@@ -140,29 +142,31 @@ public class Connection : MonoBehaviour {
 	        }
 	        points.Add(newRow);
 	    }
+		//the start field can obviously reach its edges
 		points [from.xCoord] [from.yCoord].northMeet = true;
 		points [from.xCoord] [from.yCoord].southMeet = true;
 		points [from.xCoord] [from.yCoord].eastMeet = true;
 		points [from.xCoord] [from.yCoord].westMeet = true;
+		//and now recursion comes
 	    return points[from.xCoord][from.yCoord].isAimPoint(points[to.xCoord][to.yCoord],points);
 	}
 
-	public static bool CanGo (Barrack from2, Stronghold to)
+	public static bool CanGo (Barrack from2, Stronghold to) //sending soldiers (likely)
 	{
 		return IsConnected (from2.myField, to.myField, from2.owner, true);
 	}
 
-	public static bool CanGo (Barrack from2, StrongBase to)
+	public static bool CanGo (Barrack from2, StrongBase to)  //wanna conquer
 	{
 		return IsConnected (from2.myField, to.myField, from2.owner, true);
 	}
 
-	public static bool CanGo (Stronghold from2, Barrack to)
+	public static bool CanGo (Stronghold from2, Barrack to) //barrack siege
 	{
 		return IsConnected (from2.myField, to.myField, from2.owner, false, false);
 	}
 
-	public static bool CanGo (Stronghold from2, Stronghold to)
+	public static bool CanGo (Stronghold from2, Stronghold to) //normal siege
 	{
 		if (from2.owner==to.owner) //its just a nice walk to the neighbours
 			return IsConnected (from2.myField, to.myField, from2.owner, true); //I don't see a reason for checking this, maybe the two bool shall be the opposite.
@@ -176,38 +180,8 @@ public class Connection : MonoBehaviour {
 		return false;
 	}
 
-	public static bool CanGo (Village from2, Barrack to)
+	public static bool CanGo (Village from2, Barrack to) //sending some happy villagers to become soldiers and die in a bloody fight
 	{
 		return IsConnected (from2.myField, to.myField, to.owner);
 	}
-
-	//TODO test CanGo-s
-
-
-
-
-
-
-
-/*bool gameScreen::isConnected(field from, field to)
-{
-    if (from.getType()==field::VILLAGE
-        && to.getType()==field::BARRACK) //can use only roads
-        return helperF(from, to, fields, false, *this);
-    else if (from.getType()==field::BARRACK //can use roads and friendly strongholds
-          && to.getType()==field::STRONGHOLD)
-        return helperF(from, to, fields, true, *this);
-    else if (from.getType()==field::STRONGHOLD //assault
-          && to.getType()==field::STRONGHOLD) //can use only roads, to target(to)'s territory
-        for (int i=to.coordinate.X-3;i<=to.coordinate.X+3;i++)
-            for (int j=to.coordinate.Y-3;j<=to.coordinate.Y+3;j++)
-                if (inFields(makeCoor(i,j)))
-                    if (abs(i-to.coordinate.X)+abs(j-to.coordinate.Y)<=3) //border field
-                        if (helperF(from,*fields[i][j], fields, false, *this))
-                            return true;
-    return false;
-}*/
-
-
-
 }

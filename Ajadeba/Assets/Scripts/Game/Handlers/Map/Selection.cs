@@ -4,7 +4,7 @@ using System.Collections;
 public class Selection : MonoBehaviour { 
 
 	public const string VILLAGES = "villages";
-	public const string ASSAULT_AIMS = "possible assault aims"; //assuming assault base is chosen fuild; at the moment it finds enemy strongholds later barrack assault can be added
+	public const string ASSAULT_AIMS = "possible assault aims"; //assuming assault base is chosen fuild; at the moment it finds enemy strongholds later barrack assault can be added (TODO: barracksiege))
 	static Stronghold assaultBase;
 
 	//for BJB
@@ -15,7 +15,7 @@ public class Selection : MonoBehaviour {
 	public const string BORDERS = "stronghold's territory border"; //currently chosen stronghold's territory's border fields
 	static Field ter; //the chosen territory field (to be moved)
 
-	public static bool SelectionTime (string whatToSelect)
+	public static bool SelectionTime (string whatToSelect) //selects the apropriate fields; returns if something was selected
 	{
 		bool somethingSelected = false;
 
@@ -69,7 +69,7 @@ public class Selection : MonoBehaviour {
 		return somethingSelected;
 	}
 
-	public static bool SelectionTimeOver (string toWhat)
+	public static bool SelectionTimeOver (string toWhat) //deselects the apropriate fields; returns if something was deselected
 	{
 		bool somethingDeselected = false;
 

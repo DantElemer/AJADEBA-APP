@@ -265,7 +265,7 @@ public class MapHandler : MonoBehaviour {
 		}
 	}
 
-	void KillCheckOnFullMap()
+	public void KillCheckOnFullMap()
 	{
 		foreach (Field[] row in fields)
 			foreach (Field f in row)

@@ -19,6 +19,25 @@ public class BJB : Character {
 		hasTurnEndBoost = true;
 	}
 
+	public override void AddedToPlayer (Player toWhom)
+	{
+		base.AddedToPlayer (toWhom);
+		//stronghold territory modifying:
+		foreach (Field[] row in MapHandler.instance.fields)
+			foreach (Field f in row)
+				if (f!=null)
+				if (f.HasPart (Field.STRONGHOLD))
+				{
+					if (PlayerHandler.instance.areEnemies (f.myStronghold.owner, toWhom)) 
+						if (!f.myStronghold.owner.HasChar (Character.BJB))
+							f.myStronghold.ReduceTerritory ();
+					if (f.myStronghold.owner == toWhom)
+						f.myStronghold.ExtendTerritory ();
+				}
+		MapHandler.instance.KillCheckOnFullMap (); //kissé pazarló (TODO)
+		
+	}
+
 	public override void TurnPassed ()
 	{
 		base.TurnPassed ();
